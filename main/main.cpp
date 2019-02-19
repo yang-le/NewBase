@@ -4,22 +4,6 @@
 #include "base/config.h"
 #include "base/dynamic_lib.h"
 #include "base/log.h"
-#include "vld.h"
-
-//struct component_config {
-//    std::string class_name;
-//    std::string name;
-//    std::string config_file_path;
-//};
-//
-//struct module_config {
-//    std::string module_library;
-//    std::vector<component_config> components;
-//};
-//
-//struct main_config {
-//    std::vector<module_config> modules;
-//};
 
 void main(int argc, char* argv[]) {
     auto cfg = load_config_from_file(argv[1]);

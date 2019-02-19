@@ -1,6 +1,5 @@
 #include "base/log.h"
 #include "base/node.h"
-#include "vld.h"
 
 class node1 final : public timer_node {
     virtual bool initialize(const std::string& cfg) override {
