@@ -55,20 +55,20 @@ public:
 
     template <typename F, typename... Args>
     std::future<typename std::result_of<F(Args...)>::type>
-    start(unsigned int period, F&& f, Args&&... args) {
-        return commit(false, period, std::forward<F>(f), std::forward<Args...>(args)...);
+    start(unsigned int interval, F&& f, Args&&... args) {
+        return commit(false, interval, std::forward<F>(f), std::forward<Args...>(args)...);
     }
 
     template <typename F, typename... Args>
     std::future<typename std::result_of<F(Args...)>::type>
-    start_once(unsigned int period, F&& f, Args&&... args) {
-        return commit(true, period, std::forward<F>(f), std::forward<Args...>(args)...);
+    start_once(unsigned int interval, F&& f, Args&&... args) {
+        return commit(true, interval, std::forward<F>(f), std::forward<Args...>(args)...);
     }
 
 private:
     template <typename F, typename... Args>
     std::future<typename std::result_of<F(Args...)>::type>
-        commit(bool one_shot, unsigned int period, F&& f, Args&&... args) {
+        commit(bool one_shot, unsigned int interval, F&& f, Args&&... args) {
         using return_type = decltype(f(args...));
         auto task = std::make_shared<std::packaged_task<return_type()>>(
             std::bind(std::forward<F>(f), std::forward<Args...>(args)...));
@@ -83,13 +83,13 @@ private:
             if (one_shot) {
                 tasks_.emplace([task] {
                     (*task)();
-                }, std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(period));
+                }, std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(interval));
             }
             else {
                 tasks_.emplace([=] {
                     (*task)();
-                    commit(false, period, f, args...);
-                }, std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(period));
+                    commit(false, interval, f, args...);
+                }, std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(interval));
             }
         }
 

@@ -10,6 +10,7 @@ public:
     virtual ~node_base() = default;
 
     virtual bool init(const std::string& cfg_file_path) { return false; };
+    virtual bool init(unsigned int interval, const std::string& cfg_file_path) { return false; };
 };
 
 class node : public node_base {
@@ -24,12 +25,12 @@ private:
 
 class timer_node : public node_base {
 public:
-    virtual bool init(const std::string& cfg_file_path) override {
+    virtual bool init(unsigned int interval, const std::string& cfg_file_path) override {
         if (!initialize(cfg_file_path)) {
             return false;
         }
 
-        t_.start(1000, [this] {
+        t_.start(interval, [this] {
             process();
         });
 
