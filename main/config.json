@@ -1,0 +1,14 @@
+{
+    "modules": [
+        {
+            "module_library": "C:/Users/yang.le/Documents/Visual Studio 2015/Projects/Project1/Debug/Node1.dll",
+            "components": [
+                {
+                    "class_name": "node1", 
+                    "name": "perception", 
+                    "config_file_path": "/path/to/perception.conf"
+                }
+            ]
+        }
+    ]
+}
