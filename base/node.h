@@ -3,6 +3,9 @@
 #include <string>
 #include "base/timer.h"
 #include "base/class_factory.h"
+#include "base/macros.h"
+
+NEW_BASE_BEGIN
 
 class node_base {
 public:
@@ -45,8 +48,8 @@ private:
     timer t_;
 };
 
-node_base* create_node_obj(const std::string& class_name) {
-    return create_class_obj<node_base>(class_name);
-}
+NEW_BASE_API node_base* create_node_obj(const std::string& class_name);
+
+NEW_BASE_END
 
 #define NODE_REGIST(n) CLASS_FACTORY_REGIST(n, node_base)

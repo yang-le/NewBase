@@ -120,7 +120,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="class_factory.cc" />
+    <ClCompile Include="config.cc" />
     <ClCompile Include="dynamic_lib.cc" />
+    <ClCompile Include="node.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="auto_reg_factory.h" />
+    <ClInclude Include="class_factory.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="dynamic_lib.h" />
+    <ClInclude Include="factory.h" />
+    <ClInclude Include="function_traits.h" />
+    <ClInclude Include="log.h" />
+    <ClInclude Include="macros.h" />
+    <ClInclude Include="message_bus.h" />
+    <ClInclude Include="node.h" />
+    <ClInclude Include="thread_pool.h" />
+    <ClInclude Include="timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

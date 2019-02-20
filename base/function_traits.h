@@ -3,6 +3,9 @@
 #pragma once
 
 #include <tuple>
+#include "base/macros.h"
+
+NEW_BASE_BEGIN
 
 template <typename T>
 struct function_traits;
@@ -52,3 +55,5 @@ struct function_traits<Ret(C::*)(Args...) const volatile>
 template<typename Callable>
 struct function_traits
     : function_traits<decltype(&Callable::operator())> {};
+
+NEW_BASE_END

@@ -5,22 +5,30 @@
 #include <string>
 #include <map>
 #include <memory>
+#include "base/macros.h"
 
 #ifdef _WIN32
 #include <windows.h>
-using lib_t = HMODULE;
 #define LOAD(x) LoadLibrary(x)
 #define UNLOAD(x) (void)FreeLibrary(x)
 #define FIND(x, func) GetProcAddress(x, func)
 #else
 #include <dlfcn.h>
-using lib_t = void*;
 #define LOAD(x) dlopen(x, RTLD_LAZY)
 #define UNLOAD(x) (void)dlclose(x)
 #define FIND(x, func) dlsym(x, func)
 #endif
 
+NEW_BASE_BEGIN
+
 class dynamic_lib {
+
+#ifdef _WIN32
+ using lib_t = HMODULE;
+#else
+ using lib_t = void*;
+#endif
+
  public:
     explicit dynamic_lib(const std::string& path) {
         load(path);
@@ -59,12 +67,9 @@ class dynamic_lib {
 
 namespace detail {
     using dynamic_lib_map = std::map<std::string, std::unique_ptr<dynamic_lib>>;
-    __declspec(dllexport) dynamic_lib_map& get_dynamic_lib_map();
+    NEW_BASE_API dynamic_lib_map& get_dynamic_lib_map();
 }
 
-void load_dynamic_lib(const std::string& path) {
-    auto& map = detail::get_dynamic_lib_map();
-    if (map.find(path) == map.end()) {
-        map.emplace(path, std::make_unique<dynamic_lib>(path));
-    }
-}
+NEW_BASE_API void load_dynamic_lib(const std::string& path);
+
+NEW_BASE_END

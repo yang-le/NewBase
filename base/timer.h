@@ -3,14 +3,16 @@
 #include <thread>
 #include <atomic>
 #include <functional>
-#include <vector>
 #include <queue>
 #include <mutex>
-#include <condition_variable>
 #include <future>
 #include <chrono>
 
+#include "base/macros.h"
+
 using namespace std::chrono_literals;
+
+NEW_BASE_BEGIN
 
 class timer {
 public:
@@ -102,3 +104,5 @@ private:
     std::atomic_bool stopped_;
     std::mutex mutex_;
 };
+
+NEW_BASE_END

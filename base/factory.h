@@ -6,6 +6,8 @@
 #include <memory>
 #include "base/macros.h"
 
+NEW_BASE_BEGIN
+
 class abstarct_factory_base {
     // this base class is used to hide the template parameters.
 public:
@@ -27,3 +29,5 @@ public:
         return std::shared_ptr<Product>(produce(key));
     }
 };
+
+NEW_BASE_END

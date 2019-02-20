@@ -15,6 +15,8 @@
 #endif
 #include "base/macros.h"
 
+NEW_BASE_BEGIN
+
 class message_bus {
  public:
     message_bus() = default;
@@ -68,3 +70,5 @@ class message_bus {
 
     DISALLOW_COPY_AND_ASSIGN(message_bus);
 };
+
+NEW_BASE_END

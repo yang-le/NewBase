@@ -9,6 +9,10 @@
 #include <condition_variable>
 #include <future>
 
+#include "base/macros.h"
+
+NEW_BASE_BEGIN
+
 class thread_pool {
  public:
     using task_t = std::function<void()>;
@@ -77,3 +81,5 @@ class thread_pool {
     std::mutex mutex_;
     std::condition_variable ready_;
 };
+
+NEW_BASE_END

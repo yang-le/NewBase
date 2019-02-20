@@ -2,6 +2,15 @@
 
 #pragma once
 
+#ifdef _WIN32
+#define NEW_BASE_API __declspec(dllexport)
+#else
+#define NEW_BASE_API
+#endif
+
+#define NEW_BASE_BEGIN namespace nb {
+#define NEW_BASE_END }
+
 #define DISALLOW_COPY_AND_ASSIGN(classname) \
   classname(const classname &) = delete;    \
   classname &operator=(const classname &) = delete

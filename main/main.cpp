@@ -5,6 +5,8 @@
 #include "base/dynamic_lib.h"
 #include "base/log.h"
 
+using namespace nb;
+
 void main(int argc, char* argv[]) {
     auto cfg = load_config_from_file(argv[1]);
     
