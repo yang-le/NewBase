@@ -5,9 +5,19 @@
 			"timer_nodes": [
                 {
                     "class_name": "node1", 
-                    "name": "perception", 
-                    "config_file_path": "/path/to/perception.conf",
-					"interval" : 100
+                    "name": "talker", 
+                    "config_file_path": "/path/to/talker.conf",
+					"interval" : 1000
+                }
+            ]
+        },
+		{
+            "module_library": "E:/git/NewBase/Debug/Node2.dll",
+			"nodes": [
+                {
+                    "class_name": "node2",
+                    "name": "listener",
+                    "config_file_path": "/path/to/listener.conf"
                 }
             ]
         }

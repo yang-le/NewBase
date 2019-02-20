@@ -22,14 +22,14 @@ class message_bus {
     message_bus() = default;
 
     template <typename F>
-    void regist_handler(const std::string& topic, const F& f) {
+    void subscribe(const std::string& topic, const F& f) {
         std::lock_guard<std::mutex> lock(mutex_);
         map_.emplace(topic,
             std::bind(&invoker<F>::apply, f, std::placeholders::_1));
     }
 
     template <typename... Args>
-    void call(const std::string& topic, Args&&... args) {
+    void publish(const std::string& topic, Args&&... args) {
         auto range = map_.equal_range(topic);
         for (auto it = range.first; it != range.second; ++it) {
             auto tp = std::make_tuple(std::forward<Args...>(args)...);
@@ -70,5 +70,7 @@ class message_bus {
 
     DISALLOW_COPY_AND_ASSIGN(message_bus);
 };
+
+NEW_BASE_API message_bus& get_message_bus();
 
 NEW_BASE_END

@@ -35,14 +35,10 @@ public:
 
                 if (!tasks_.empty()) {
                     task t = std::move(tasks_.top());
-                    if (std::chrono::high_resolution_clock::now() < t.dead_line_) {
-                        continue;
+                    if (std::chrono::high_resolution_clock::now() >= t.dead_line_) {
+                        { std::lock_guard<std::mutex> lock(mutex_); tasks_.pop(); }
+                        t.func_();
                     }
-                    {
-                        std::unique_lock<std::mutex> lock(mutex_);
-                        tasks_.pop();
-                    }
-                    t.func_();
                 }
             }
         });
@@ -56,43 +52,28 @@ public:
     }
 
     template <typename F, typename... Args>
-    std::future<typename std::result_of<F(Args...)>::type>
-    start(unsigned int interval, F&& f, Args&&... args) {
-        return commit(false, interval, std::forward<F>(f), std::forward<Args...>(args)...);
+    void start(unsigned int interval, F&& f, Args&&... args) {
+        if (!stopped_) {
+            std::lock_guard<std::mutex> lock(mutex_);
+            tasks_.emplace([=] {
+                f(args...);
+                start(interval, f, args...);
+            }, std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(interval));
+        }
     }
 
     template <typename F, typename... Args>
     std::future<typename std::result_of<F(Args...)>::type>
     start_once(unsigned int interval, F&& f, Args&&... args) {
-        return commit(true, interval, std::forward<F>(f), std::forward<Args...>(args)...);
-    }
-
-private:
-    template <typename F, typename... Args>
-    std::future<typename std::result_of<F(Args...)>::type>
-        commit(bool one_shot, unsigned int interval, F&& f, Args&&... args) {
         using return_type = decltype(f(args...));
         auto task = std::make_shared<std::packaged_task<return_type()>>(
             std::bind(std::forward<F>(f), std::forward<Args...>(args)...));
 
-        if (stopped_) {
-            //throw std::runtime_error("timer is stopped.");
-            return task->get_future();
-        }
-
-        {
+        if (!stopped_) {
             std::lock_guard<std::mutex> lock(mutex_);
-            if (one_shot) {
-                tasks_.emplace([task] {
-                    (*task)();
-                }, std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(interval));
-            }
-            else {
-                tasks_.emplace([=] {
-                    (*task)();
-                    commit(false, interval, f, args...);
-                }, std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(interval));
-            }
+            tasks_.emplace([task] {
+                (*task)();
+            }, std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(interval));
         }
 
         return task->get_future();
