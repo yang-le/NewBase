@@ -1,7 +1,11 @@
 #pragma once
 
 #include "base/factory.h"
+#include "base/macros.h"
 
+NEW_BASE_BEGIN
+
+namespace todo {
 template <typename Product>
 class auto_reg_factory : public abstract_factory<Product> {
 public:
@@ -9,7 +13,7 @@ public:
     struct register_handler {
         template <typename... Args>
         register_handler(const std::string& key, Args&&... args) {
-            auto_reg_factory<Product>::instance().map_.emplace(key, [&]{
+            auto_reg_factory<Product>::instance().map_.emplace(key, [&] {
                 return new T(std::forward<Args...>(args)...);
             });
         }
@@ -28,6 +32,9 @@ private:
 
     DECLARE_SINGLETON(auto_reg_factory);
 };
+}
+
+NEW_BASE_END
 
 #define REGIST_PRODUCT(Base, T, key, ...) \
     namespace { auto_reg_factory<Base>::register_handler<T> handler_##Base##_##T##_##key(#key, ##__VA_ARGS__); }

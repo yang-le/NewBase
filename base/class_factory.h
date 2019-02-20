@@ -9,31 +9,31 @@
 NEW_BASE_BEGIN
 
 namespace detail {
-    using class_factory_map = std::map<std::string, std::unique_ptr<abstarct_factory_base>>;
-    using base_factory_map = std::map<std::string, class_factory_map>;
+using class_factory_map = std::map<std::string, std::unique_ptr<abstarct_factory_base>>;
+using base_factory_map = std::map<std::string, class_factory_map>;
 
-    NEW_BASE_API std::mutex& get_mutex();
-    NEW_BASE_API base_factory_map& get_base_to_class_factory_map();
-    NEW_BASE_API class_factory_map& get_class_factory_map(const std::string& base);
+NEW_BASE_API std::mutex& get_mutex();
+NEW_BASE_API base_factory_map& get_base_to_class_factory_map();
+NEW_BASE_API class_factory_map& get_class_factory_map(const std::string& base);
 }
 
 namespace {
-    template <typename ClassObject, typename Base>
-    class class_factory : public abstract_factory<Base> {
-    public:
-        virtual Base* produce(const std::string&) const override { return new ClassObject; }
-    };
+template <typename ClassObject, typename Base>
+class class_factory : public abstract_factory<Base> {
+public:
+    virtual Base* produce(const std::string&) const override { return new ClassObject; }
+};
 
-    template <typename Derived, typename Base>
-    void regist_class(const std::string& class_name) {
-        auto factory = std::make_unique<class_factory<Derived, Base>>();
+template <typename Derived, typename Base>
+void regist_class(const std::string& class_name) {
+    auto factory = std::make_unique<class_factory<Derived, Base>>();
 
-        {
-            std::lock_guard<std::mutex> lock(detail::get_mutex());
-            auto& factory_map = detail::get_class_factory_map(typeid(Base).name());
-            factory_map.emplace(class_name, std::move(factory));
-        }
+    {
+        std::lock_guard<std::mutex> lock(detail::get_mutex());
+        auto& factory_map = detail::get_class_factory_map(typeid(Base).name());
+        factory_map.emplace(class_name, std::move(factory));
     }
+}
 }
 
 template <typename Base>

@@ -3,7 +3,7 @@
 NEW_BASE_BEGIN
 
 namespace {
-    message_bus bus_;
+message_bus bus_;
 }
 
 message_bus& get_message_bus() {
