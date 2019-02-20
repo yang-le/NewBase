@@ -123,6 +123,7 @@
     <ClCompile Include="config.cc" />
     <ClCompile Include="dynamic_lib.cc" />
     <ClCompile Include="node.cc" />
+    <ClCompile Include="platform.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="auto_reg_factory.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="log.h" />
     <ClInclude Include="macros.h" />
     <ClInclude Include="message_bus.h" />
+    <ClInclude Include="platform.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="thread_pool.h" />
     <ClInclude Include="timer.h" />

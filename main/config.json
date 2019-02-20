@@ -2,13 +2,6 @@
     "modules": [
         {
             "module_library": "E:/git/NewBase/Debug/Node1.dll",
-            "nodes": [
-                {
-                    "class_name": "node1", 
-                    "name": "perception", 
-                    "config_file_path": "/path/to/perception.conf"
-                }
-            ],
 			"timer_nodes": [
                 {
                     "class_name": "node1", 

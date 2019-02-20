@@ -4,11 +4,11 @@ NEW_BASE_BEGIN
 
 namespace detail {
 namespace {
-    dynamic_lib_map map;
+    dynamic_lib_map map_;
 } // namepsace <unnamed>
 
 dynamic_lib_map& get_dynamic_lib_map() {
-    return map;
+    return map_;
 }
 } // namespace detail
 
