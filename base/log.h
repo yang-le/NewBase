@@ -10,13 +10,13 @@ namespace log {
 template <spdlog::level::level_enum level>
 struct spdlogger {
 public:
-    spdlogger() : logger_(spdlog::default_logger_raw()) { }
+    spdlogger(spdlog::source_loc loc) : loc_(loc), logger_(spdlog::default_logger_raw()) { }
 
-    spdlogger(const spdlog::logger* logger) : logger_(logger) { }
+    spdlogger(spdlog::source_loc loc, const spdlog::logger* logger) : loc_(loc), logger_(logger) { }
 
     ~spdlogger() {
         if (logger_->should_log(level)) {
-            logger_->log(level, stream_.str());
+            logger_->log(loc_, level, stream_.str());
         }
     }
 
@@ -25,6 +25,7 @@ public:
     }
 
 private:
+    spdlog::source_loc loc_;
     spdlog::logger* logger_;
     std::ostringstream stream_;
 };
@@ -32,6 +33,6 @@ private:
 
 NEW_BASE_END
 
-#define LOG_E log::spdlogger<spdlog::level::err>().stream()
-#define LOG_W log::spdlogger<spdlog::level::warn>().stream()
-#define LOG_I log::spdlogger<spdlog::level::info>().stream()
+#define LOG_E log::spdlogger<spdlog::level::err>(spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, SPDLOG_FUNCTION}).stream()
+#define LOG_W log::spdlogger<spdlog::level::warn>(spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, SPDLOG_FUNCTION}).stream()
+#define LOG_I log::spdlogger<spdlog::level::info>(spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, SPDLOG_FUNCTION}).stream()
