@@ -20,7 +20,7 @@ public:
         using time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
         template <typename F>
-        task(F func, time_point& dead_line) : func_(func), dead_line_(dead_line) {}
+        task(F func, time_point&& dead_line) : func_(func), dead_line_(std::move(dead_line)) {}
 
         bool operator< (const task& rhd) const { return dead_line_ > rhd.dead_line_; }
 

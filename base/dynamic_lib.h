@@ -52,7 +52,7 @@ class dynamic_lib {
     }
 
     template <typename Ret, typename... Args>
-    typename Ret call(const std::string& func, Args&&... args) {
+    Ret call(const std::string& func, Args&&... args) {
         using T = Ret(Args...);
         T* f = reinterpret_cast<T*>(FIND(lib_, func.c_str()));
         if (f == nullptr) {

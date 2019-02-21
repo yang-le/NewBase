@@ -12,7 +12,7 @@ class spdlogger {
 public:
     spdlogger(spdlog::source_loc loc) : loc_(loc), logger_(spdlog::default_logger_raw()) { }
 
-    spdlogger(spdlog::source_loc loc, const spdlog::logger* logger) : loc_(loc), logger_(logger) { }
+    spdlogger(spdlog::source_loc loc, spdlog::logger* logger) : loc_(loc), logger_(logger) { }
 
     ~spdlogger() {
         if (logger_->should_log(level)) {

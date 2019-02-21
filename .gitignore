@@ -47,12 +47,14 @@ artifacts/
 *_i.h
 *.ilk
 *.meta
+*.o
 *.obj
 *.pch
 *.pdb
 *.pgc
 *.pgd
 *.rsp
+*.so
 *.sbr
 *.tlb
 *.tli

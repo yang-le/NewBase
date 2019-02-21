@@ -36,13 +36,13 @@ class message_bus {
     template <typename F>
     struct invoker {
         static void apply(const F& f, const void *args) {
-            using arg_t = function_traits<F>::arg_tuple_t;
+            using arg_t = typename function_traits<F>::arg_tuple_t;
             const arg_t* tp = static_cast<const arg_t*>(args);
             call(f,
                 std::make_index_sequence<function_traits<F>::num_args>{}, *tp);
         }
 
-        template <typename F, size_t... I, typename... Args>
+        template <size_t... I, typename... Args>
         static void call(
             const F& f,
             const std::index_sequence<I...>&,
