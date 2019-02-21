@@ -8,7 +8,7 @@ NEW_BASE_BEGIN
 
 namespace log {
 template <spdlog::level::level_enum level>
-struct spdlogger {
+class spdlogger {
 public:
     spdlogger(spdlog::source_loc loc) : loc_(loc), logger_(spdlog::default_logger_raw()) { }
 

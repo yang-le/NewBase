@@ -14,6 +14,13 @@ NEW_BASE_BEGIN
 
 namespace platform {
 namespace {
+enum state : std::uint8_t {
+    STATE_UNINITIALIZED = 0,
+    STATE_INITIALIZED,
+    STATE_SHUTTING_DOWN,
+    STATE_SHUTDOWN,
+};
+
 std::atomic<state> state_;
 std::vector<std::unique_ptr<node_base>> nodes_;
 
