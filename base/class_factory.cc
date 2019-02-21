@@ -12,17 +12,12 @@ std::mutex& get_mutex() {
     return mutex_;
 }
 
-base_factory_map& get_base_to_class_factory_map() {
-    return map_;
-}
-
 class_factory_map& get_class_factory_map(const std::string& base) {
-    auto& base_map = get_base_to_class_factory_map();
-    if (base_map.find(base) == base_map.end()) {
-        base_map.emplace(base, class_factory_map());
+    if (map_.find(base) == map_.end()) {
+        map_.emplace(base, class_factory_map());
     }
 
-    return base_map[base];
+    return map_[base];
 }
 } // namespace detail
 

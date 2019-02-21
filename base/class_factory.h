@@ -13,7 +13,6 @@ using class_factory_map = std::map<std::string, std::unique_ptr<abstarct_factory
 using base_factory_map = std::map<std::string, class_factory_map>;
 
 NEW_BASE_API std::mutex& get_mutex();
-NEW_BASE_API base_factory_map& get_base_to_class_factory_map();
 NEW_BASE_API class_factory_map& get_class_factory_map(const std::string& base);
 }
 
