@@ -74,5 +74,11 @@
     <ClInclude Include="platform.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="integer_sequence.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="apply.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

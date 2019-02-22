@@ -8,6 +8,7 @@
 #include <mutex>
 #include <tuple>
 #include "base/function_traits.h"
+#include "base/integer_sequence.h"
 #include "base/macros.h"
 
 NEW_BASE_BEGIN
@@ -36,16 +37,16 @@ class message_bus {
     template <typename F>
     struct invoker {
         static void apply(const F& f, const void *args) {
-            using arg_t = typename function_traits<F>::arg_tuple_t;
+            using arg_t = typename utility::function_traits<F>::arg_tuple_t;
             const arg_t* tp = static_cast<const arg_t*>(args);
             call(f,
-                std::make_index_sequence<function_traits<F>::num_args>{}, *tp);
+                utility::make_index_sequence<utility::function_traits<F>::arity>{}, *tp);
         }
 
         template <size_t... I, typename... Args>
         static void call(
             const F& f,
-            const std::index_sequence<I...>&,
+            const utility::index_sequence<I...>&,
             const std::tuple<Args...>& tp) {
             f(std::get<I>(tp)...);
         }

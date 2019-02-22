@@ -7,7 +7,8 @@
 
 NEW_BASE_BEGIN
 
-template <typename T>
+namespace utility {
+template <typename F>
 struct function_traits;
 
 template <typename Ret, typename... Args>
@@ -15,11 +16,11 @@ struct function_traits<Ret(Args...)> {
     using return_type = Ret;
     using type = Ret(Args...);
     using arg_tuple_t = std::tuple<Args...>;
-    static constexpr size_t num_args = sizeof...(Args);
+    static constexpr size_t arity = sizeof...(Args);
 
     template<size_t I>
-    struct args {
-        static_assert(I < num_args, "index out of bound");
+    struct arg {
+        static_assert(I < arity, "function_traits<F>::arg<I> requires I to be less than function_traits<F>::arity.");
         using type = typename std::tuple_element<I, arg_tuple_t>::type;
     };
 };
@@ -55,5 +56,6 @@ struct function_traits<Ret(C::*)(Args...) const volatile>
 template<typename Callable>
 struct function_traits
     : function_traits<decltype(&Callable::operator())> {};
+}
 
 NEW_BASE_END

@@ -127,12 +127,14 @@
     <ClCompile Include="platform.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="apply.h" />
     <ClInclude Include="auto_reg_factory.h" />
     <ClInclude Include="class_factory.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="dynamic_lib.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="function_traits.h" />
+    <ClInclude Include="integer_sequence.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="macros.h" />
     <ClInclude Include="message_bus.h" />
