@@ -80,5 +80,11 @@
     <ClInclude Include="apply.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="smart_ptr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="chrono_literals.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

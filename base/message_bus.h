@@ -28,7 +28,7 @@ class message_bus {
     void publish(const std::string& topic, Args&&... args) {
         auto range = map_.equal_range(topic);
         for (auto it = range.first; it != range.second; ++it) {
-            auto tp = std::make_tuple(std::forward<Args...>(args)...);
+            auto tp = std::make_tuple(std::forward<Args>(args)...);
             it->second(&tp);
         }
     }

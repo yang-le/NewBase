@@ -14,7 +14,7 @@ public:
         template <typename... Args>
         register_handler(const std::string& key, Args&&... args) {
             auto_reg_factory<Product>::instance().map_.emplace(key, [&] {
-                return new T(std::forward<Args...>(args)...);
+                return new T(std::forward<Args>(args)...);
             });
         }
     };

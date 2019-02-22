@@ -4,6 +4,7 @@
 #include <mutex>
 #include <memory>
 #include "base/factory.h"
+#include "base/smart_ptr.h"
 #include "base/macros.h"
 
 NEW_BASE_BEGIN
@@ -25,7 +26,7 @@ public:
 
 template <typename Derived, typename Base>
 void regist_class(const std::string& class_name) {
-    auto factory = std::make_unique<class_factory<Derived, Base>>();
+    auto factory = utility::make_unique<class_factory<Derived, Base>>();
 
     {
         std::lock_guard<std::mutex> lock(detail::get_mutex());

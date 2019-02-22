@@ -8,11 +8,12 @@
 #include <future>
 #include <chrono>
 
+#include "base/chrono_literals.h"
 #include "base/macros.h"
 
-using namespace std::chrono_literals;
-
 NEW_BASE_BEGIN
+
+using namespace chrono_literals;
 
 class timer {
 public:
@@ -67,7 +68,7 @@ public:
     start_once(unsigned int interval, F&& f, Args&&... args) {
         using return_type = decltype(f(args...));
         auto task = std::make_shared<std::packaged_task<return_type()>>(
-            std::bind(std::forward<F>(f), std::forward<Args...>(args)...));
+            std::bind(std::forward<F>(f), std::forward<Args>(args)...));
 
         if (!stopped_) {
             std::lock_guard<std::mutex> lock(mutex_);

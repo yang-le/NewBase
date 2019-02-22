@@ -8,9 +8,9 @@
 #include "base/dynamic_lib.h"
 #include "base/log.h"
 
-using namespace std::chrono_literals;
-
 NEW_BASE_BEGIN
+
+using namespace chrono_literals;
 
 namespace platform {
 namespace {

@@ -62,7 +62,7 @@ class thread_pool {
 
         using return_type = decltype(f(args...));
         auto task = std::make_shared<std::packaged_task<return_type()>>(
-            std::bind(std::forward<F>(f), std::forward<Args...>(args)...));
+            std::bind(std::forward<F>(f), std::forward<Args>(args)...));
         {
             std::lock_guard<std::mutex> lock(mutex_);
             tasks_.emplace([task] {

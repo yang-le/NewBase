@@ -1,4 +1,5 @@
 #include "base/dynamic_lib.h"
+#include "base/smart_ptr.h"
 
 NEW_BASE_BEGIN
 
@@ -15,7 +16,7 @@ dynamic_lib_map& get_dynamic_lib_map() {
 void load_dynamic_lib(const std::string& path) {
     auto& map = detail::get_dynamic_lib_map();
     if (map.find(path) == map.end()) {
-        map.emplace(path, std::make_unique<dynamic_lib>(path));
+        map.emplace(path, utility::make_unique<dynamic_lib>(path));
     }
 }
 
