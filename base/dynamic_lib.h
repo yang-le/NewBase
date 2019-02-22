@@ -12,11 +12,13 @@
 #define LOAD(x) LoadLibrary(x)
 #define UNLOAD(x) (void)FreeLibrary(x)
 #define FIND(x, func) GetProcAddress(x, func)
+#define ERROR_STR() "cannot load library: " + path
 #else
 #include <dlfcn.h>
 #define LOAD(x) dlopen(x, RTLD_LAZY)
 #define UNLOAD(x) (void)dlclose(x)
 #define FIND(x, func) dlsym(x, func)
+#define ERROR_STR() dlerror()
 #endif
 
 NEW_BASE_BEGIN
@@ -41,7 +43,7 @@ class dynamic_lib {
     void load(const std::string& path) {
         lib_ = LOAD(path.c_str());
         if (!lib_) {
-            throw std::runtime_error("can not load library: " + path);
+            throw std::runtime_error(ERROR_STR());
         }
     }
 
