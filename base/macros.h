@@ -2,7 +2,7 @@
 
 #pragma once
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 #define NEW_BASE_API __declspec(dllexport)
 #else
 #define NEW_BASE_API

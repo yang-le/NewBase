@@ -3,6 +3,16 @@
 #include <chrono>
 #include "base/macros.h"
 
+#ifdef _MSC_VER
+#pragma warning(push) 
+#pragma warning(disable: 4455)
+#endif
+
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wliteral-suffix"
+#endif
+
 NEW_BASE_BEGIN
 
 // the c++14 std::chrono_literals
@@ -78,3 +88,11 @@ inline namespace literals {
 }	// inline namespace literals
 
 NEW_BASE_END
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
+#ifdef _MSC_VER
+#pragma warning(pop) 
+#endif

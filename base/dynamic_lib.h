@@ -7,7 +7,7 @@
 #include <memory>
 #include "base/macros.h"
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 #include <windows.h>
 #define LOAD(x) LoadLibrary(x)
 #define UNLOAD(x) (void)FreeLibrary(x)
@@ -23,7 +23,7 @@ NEW_BASE_BEGIN
 
 class dynamic_lib {
 
-#ifdef _WIN32
+#ifdef _MSC_VER
  using lib_t = HMODULE;
 #else
  using lib_t = void*;
