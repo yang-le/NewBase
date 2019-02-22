@@ -1,5 +1,3 @@
-#include <crtdbg.h>
-#include <iostream>
 #include "base/platform.h"
 #include "base/log.h"
 

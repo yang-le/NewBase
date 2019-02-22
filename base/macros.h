@@ -5,7 +5,7 @@
 #ifdef _MSC_VER
 #define NEW_BASE_API __declspec(dllexport)
 #else
-#define NEW_BASE_API
+#define NEW_BASE_API __attribute__ ((visibility ("default")))
 #endif
 
 #define NEW_BASE_BEGIN namespace nb {

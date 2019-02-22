@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string.h>
+#include <string>
 #include "base/macros.h"
 
 NEW_BASE_BEGIN
