@@ -31,12 +31,12 @@ inline namespace literals {
             return (std::chrono::duration<double, std::ratio<3600> >(val));
         }
 
-        inline std::chrono::minutes(operator "" min)(unsigned long long val)
+        inline std::chrono::minutes operator "" min(unsigned long long val)
         {	// return integral minutes
             return (std::chrono::minutes(val));
         }
 
-        inline std::chrono::duration<double, std::ratio<60> >(operator "" min)(
+        inline std::chrono::duration<double, std::ratio<60> > operator "" min(
             long double val)
         {	// return floating-point minutes
             return (std::chrono::duration<double, std::ratio<60> >(val));
