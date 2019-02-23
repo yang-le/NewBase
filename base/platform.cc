@@ -62,7 +62,7 @@ bool init() {
 
 void loop() {
     while ((get_state() != STATE_SHUTTING_DOWN) && (get_state() != STATE_SHUTDOWN)) {
-        std::this_thread::sleep_for(200ms);
+        std::this_thread::sleep_for(200_ms);
     }
 }
 }

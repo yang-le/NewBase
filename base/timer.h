@@ -32,7 +32,7 @@ public:
     timer() : stopped_(false) {
         thread_ = std::thread([this] {
             while (!stopped_ || !tasks_.empty()) {
-                std::this_thread::sleep_for(1ms);
+                std::this_thread::sleep_for(1_ms);
 
                 if (!tasks_.empty()) {
                     task t = std::move(tasks_.top());
