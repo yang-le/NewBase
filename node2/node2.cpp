@@ -5,6 +5,7 @@
 using namespace nb;
 
 class node2 final : public node {
+private:
     virtual bool initialize(const std::string& cfg) override {
         LOG_I << "I'm node2" << std::endl;
 

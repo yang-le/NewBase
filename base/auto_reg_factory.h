@@ -19,6 +19,7 @@ public:
         }
     };
 
+private:
     virtual Product* produce(const std::string& key) const override {
         if (map_.find(key) == map_.end()) {
             return nullptr;
@@ -27,7 +28,6 @@ public:
         return map_.at(key)();
     };
 
-private:
     std::map<std::string, std::function<Product*()>> map_;
 
     DECLARE_SINGLETON(auto_reg_factory);

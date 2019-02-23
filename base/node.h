@@ -1,13 +1,14 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include "base/timer.h"
 #include "base/class_factory.h"
 #include "base/macros.h"
 
 NEW_BASE_BEGIN
 
-class node_base {
+class node_base : public std::enable_shared_from_this<node_base> {
 public:
     node_base() = default;
     virtual ~node_base() = default;
@@ -33,8 +34,12 @@ public:
             return false;
         }
 
-        t_.start(interval, [this] {
-            process();
+	std::weak_ptr<timer_node> self = std::dynamic_pointer_cast<timer_node>(shared_from_this());
+        t_.start(interval, [self] {
+	    auto ptr = self.lock();
+	    if (ptr) {
+            	ptr->process();
+	    }
         });
 
         return true;
@@ -48,7 +53,7 @@ private:
     timer t_;
 };
 
-NEW_BASE_API node_base* create_node_obj(const std::string& class_name);
+NEW_BASE_API std::shared_ptr<node_base> create_node_obj(const std::string& class_name);
 
 NEW_BASE_END
 

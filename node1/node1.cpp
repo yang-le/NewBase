@@ -5,6 +5,7 @@
 using namespace nb;
 
 class node1 final : public timer_node {
+private:
     virtual bool initialize(const std::string& cfg) override {
         LOG_I << "I'm node1" << std::endl;
 
