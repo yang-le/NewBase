@@ -3,9 +3,9 @@
 #pragma once
 
 #ifdef _MSC_VER
-#define NEW_BASE_API __declspec(dllexport)
+#define NEW_BASE_EXPORT __declspec(dllexport)
 #else
-#define NEW_BASE_API __attribute__ ((visibility ("default")))
+#define NEW_BASE_EXPORT __attribute__ ((visibility ("default")))
 #endif
 
 #define NEW_BASE_BEGIN namespace nb {
@@ -15,23 +15,36 @@
   classname(const classname &) = delete;    \
   classname &operator=(const classname &) = delete
 
-#ifdef SINGLETON_IMPLIMENTATION
-#define DECLARE_SINGLETON(classname)                                      \
- public:                                                                  \
-  static classname& instance() {                                          \
+// I was considered to use Mayers' singleton like following
+
+//template<typename T>
+//class singleton
+//{
+//public:
+//    static T& getInstance()
+//    {
+//        static T value;
+//        return value;
+//    }
+//
+//private:
+//    singleton();
+//    ~singleton();
+//};
+
+// But it seems not to work well across Dlls.
+// To keep things simple, I came up with the following defines.
+
+#define DEFINE_SINGLETON(classname)                                       \
+  classname& classname::instance() {                                      \
     static classname instance;                                            \
     return instance;                                                      \
   }                                                                       \
-                                                                          \
- private:                                                                 \
-  classname() = default;                                                  \
-  ~classname() = default
-#else
+
 #define DECLARE_SINGLETON(classname)                                      \
  public:                                                                  \
-  static classname& instance();                                           \
+  NEW_BASE_EXPORT static classname& instance();                           \
                                                                           \
  private:                                                                 \
-  classname() = default;                                                  \
-  ~classname() = default
-#endif
+  classname();                                                            \
+  ~classname()

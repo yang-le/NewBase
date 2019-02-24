@@ -9,7 +9,7 @@ private:
     virtual bool initialize(const std::string& cfg) override {
         LOG_I << "I'm node1" << std::endl;
 
-        get_message_bus().subscribe("echo_topic", [] (const char* reply) {
+        message_bus::instance().subscribe("echo_topic", [] (const char* reply) {
             LOG_I << "[node1] Echo: " << reply << std::endl;
         });
 
@@ -17,7 +17,7 @@ private:
     }
 
     virtual void process() override {
-        get_message_bus().publish("demo_topic", "hello from node1");
+        message_bus::instance().publish("demo_topic", "hello from node1");
     }
 };
 

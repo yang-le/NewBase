@@ -2,12 +2,9 @@
 
 NEW_BASE_BEGIN
 
-namespace {
-message_bus bus_;
-}
+DEFINE_SINGLETON(message_bus);
 
-message_bus& get_message_bus() {
-    return bus_;
-}
+message_bus::message_bus() = default;
+message_bus::~message_bus() = default;
 
 NEW_BASE_END

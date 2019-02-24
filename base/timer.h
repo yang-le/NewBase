@@ -17,41 +17,6 @@ using namespace chrono_literals;
 
 class timer {
 public:
-    struct task {
-        using time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
-
-        template <typename F>
-        task(F func, time_point&& dead_line) : func_(func), dead_line_(std::move(dead_line)) {}
-
-        bool operator< (const task& rhd) const { return dead_line_ > rhd.dead_line_; }
-
-        std::function<void()> func_;
-        time_point dead_line_;
-    };
-
-    timer() : stopped_(false) {
-        thread_ = std::thread([this] {
-            while (!stopped_ || !tasks_.empty()) {
-                std::this_thread::sleep_for(1_ms);
-
-                if (!tasks_.empty()) {
-                    task t = std::move(tasks_.top());
-                    if (std::chrono::high_resolution_clock::now() >= t.dead_line_) {
-                        { std::lock_guard<std::mutex> lock(mutex_); tasks_.pop(); }
-                        t.func_();
-                    }
-                }
-            }
-        });
-    }
-
-    ~timer() {
-        stopped_ = true;
-        if (thread_.joinable()) {
-            thread_.join();
-        }
-    }
-
     template <typename F, typename... Args>
     void start(unsigned int interval, F&& f, Args&&... args) {
         if (!stopped_) {
@@ -81,10 +46,24 @@ public:
     }
 
 private:
+    struct task {
+        using time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
+
+        template <typename F>
+        task(F func, time_point&& dead_line) : func_(func), dead_line_(std::move(dead_line)) {}
+
+        bool operator< (const task& rhd) const { return dead_line_ > rhd.dead_line_; }
+
+        std::function<void()> func_;
+        time_point dead_line_;
+    };
+
     std::priority_queue<task> tasks_;
     std::thread thread_;
     std::atomic_bool stopped_;
     std::mutex mutex_;
+
+    DECLARE_SINGLETON(timer);
 };
 
 NEW_BASE_END

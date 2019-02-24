@@ -30,6 +30,9 @@
     <ClCompile Include="platform.cc">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="timer.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="message_bus.cc">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -75,9 +78,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="integer_sequence.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="apply.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="smart_ptr.h">

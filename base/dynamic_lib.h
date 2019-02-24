@@ -67,11 +67,6 @@ class dynamic_lib {
     lib_t lib_;
 };
 
-namespace detail {
-    using dynamic_lib_map = std::map<std::string, std::unique_ptr<dynamic_lib>>;
-    NEW_BASE_API dynamic_lib_map& get_dynamic_lib_map();
-}
-
-NEW_BASE_API void load_dynamic_lib(const std::string& path);
+NEW_BASE_EXPORT void load_dynamic_lib(const std::string& path);
 
 NEW_BASE_END

@@ -9,9 +9,9 @@ private:
     virtual bool initialize(const std::string& cfg) override {
         LOG_I << "I'm node2" << std::endl;
 
-        get_message_bus().subscribe("demo_topic", [] (const char* message){
+        message_bus::instance().subscribe("demo_topic", [] (const char* message){
             LOG_I << "[node2] Recv: " << message << std::endl;
-            get_message_bus().publish("echo_topic", message);
+            message_bus::instance().publish("echo_topic", message);
         });
 
         return true;

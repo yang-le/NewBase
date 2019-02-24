@@ -33,7 +33,7 @@ public:
             return false;
         }
 
-        t_.start(interval, [this] {
+        timer::instance().start(interval, [this] {
             process();
         });
 
@@ -43,12 +43,9 @@ public:
 private:
     virtual bool initialize(const std::string& cfg_file_path) = 0;
     virtual void process() = 0;
-
-private:
-    timer t_;
 };
 
-NEW_BASE_API node_base* create_node_obj(const std::string& class_name);
+NEW_BASE_EXPORT node_base* create_node_obj(const std::string& class_name);
 
 NEW_BASE_END
 

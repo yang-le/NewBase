@@ -3,20 +3,13 @@
 
 NEW_BASE_BEGIN
 
-namespace detail {
 namespace {
-dynamic_lib_map map_;
-} // namepsace <unnamed>
-
-dynamic_lib_map& get_dynamic_lib_map() {
-    return map_;
+std::map<std::string, std::unique_ptr<dynamic_lib>> map_;
 }
-} // namespace detail
 
 void load_dynamic_lib(const std::string& path) {
-    auto& map = detail::get_dynamic_lib_map();
-    if (map.find(path) == map.end()) {
-        map.emplace(path, utility::make_unique<dynamic_lib>(path));
+    if (map_.find(path) == map_.end()) {
+        map_.emplace(path, utility::make_unique<dynamic_lib>(path));
     }
 }
 

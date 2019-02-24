@@ -15,8 +15,6 @@ NEW_BASE_BEGIN
 
 class message_bus {
  public:
-    message_bus() = default;
-
     template <typename F>
     void subscribe(const std::string& topic, const F& f) {
         std::lock_guard<std::mutex> lock(mutex_);
@@ -55,9 +53,7 @@ class message_bus {
     std::mutex mutex_;
     std::unordered_multimap<std::string, std::function<void(const void*)>> map_;
 
-    DISALLOW_COPY_AND_ASSIGN(message_bus);
+    DECLARE_SINGLETON(message_bus);
 };
-
-NEW_BASE_API message_bus& get_message_bus();
 
 NEW_BASE_END
