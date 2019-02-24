@@ -38,9 +38,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="auto_reg_factory.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="class_factory.h">
       <Filter>头文件</Filter>
     </ClInclude>

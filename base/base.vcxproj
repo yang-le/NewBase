@@ -128,7 +128,6 @@
     <ClCompile Include="timer.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="auto_reg_factory.h" />
     <ClInclude Include="chrono_literals.h" />
     <ClInclude Include="class_factory.h" />
     <ClInclude Include="config.h" />
