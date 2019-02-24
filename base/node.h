@@ -9,16 +9,13 @@ NEW_BASE_BEGIN
 
 class node_base {
 public:
-    node_base() = default;
     virtual ~node_base() = default;
-
-    virtual bool init(const std::string& cfg_file_path) { return false; };
-    virtual bool init(unsigned int interval, const std::string& cfg_file_path) { return false; };
+    virtual bool init(const std::string& /*cfg_file_path*/, unsigned int /*interval*/ = 0) = 0;
 };
 
 class node : public node_base {
 public:
-    virtual bool init(const std::string& cfg_file_path) override {
+    virtual bool init(const std::string& cfg_file_path, unsigned int) override {
         return initialize(cfg_file_path);
     }
 
@@ -28,7 +25,7 @@ private:
 
 class timer_node : public node_base {
 public:
-    virtual bool init(unsigned int interval, const std::string& cfg_file_path) override {
+    virtual bool init(const std::string& cfg_file_path, unsigned int interval) override {
         if (!initialize(cfg_file_path)) {
             return false;
         }

@@ -101,7 +101,7 @@ bool run(const std::string& config_file) {
                 LOG_E << "create_node_obj " << c["class_name"] << " failed!" << std::endl;
                 return false;
             }
-            if (!n->init(c["interval"], c["config_file_path"])) {
+            if (!n->init(c["config_file_path"], c["interval"])) {
                 LOG_E << "init timer node " << c["class_name"] << " failed!" << std::endl;
                 return false;
             }
