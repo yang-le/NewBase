@@ -22,7 +22,7 @@ enum state : std::uint8_t {
 };
 
 std::atomic<state> state_;
-std::vector<std::shared_ptr<node_base>> nodes_;
+std::vector<std::unique_ptr<node_base>> nodes_;
 
 state get_state() {
     return state_.load();
@@ -80,11 +80,11 @@ bool run(const std::string& config_file) {
 
         for (auto c : m["nodes"]) {
             LOG_I << "class_name: " << c["class_name"] << std::endl;
-            auto n = create_node_obj(c["class_name"]);
-	    if (n == nullptr) {
-		LOG_E << "create_node_obj " << c["class_name"] << " failed!" << std::endl;
-	    	return false;
-	    }
+            auto n = std::unique_ptr<node_base>(create_node_obj(c["class_name"]));
+            if (n == nullptr) {
+                LOG_E << "create_node_obj " << c["class_name"] << " failed!" << std::endl;
+                return false;
+            }
             if (!n->init(c["config_file_path"])) {
                 LOG_E << "init node " << c["class_name"] << " failed!" << std::endl;
                 return false;
@@ -96,11 +96,11 @@ bool run(const std::string& config_file) {
 
         for (auto c : m["timer_nodes"]) {
             LOG_I << "class_name: " << c["class_name"] << std::endl;
-            auto n = create_node_obj(c["class_name"]);
-	    if (n == nullptr) {
-		LOG_E << "create_node_obj " << c["class_name"] << " failed!" << std::endl;
-	    	return false;
-	    }
+            auto n = std::unique_ptr<node_base>(create_node_obj(c["class_name"]));
+            if (n == nullptr) {
+                LOG_E << "create_node_obj " << c["class_name"] << " failed!" << std::endl;
+                return false;
+            }
             if (!n->init(c["interval"], c["config_file_path"])) {
                 LOG_E << "init timer node " << c["class_name"] << " failed!" << std::endl;
                 return false;

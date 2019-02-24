@@ -20,7 +20,7 @@ NEW_BASE_API class_factory_map& get_class_factory_map(const std::string& base);
 namespace {
 template <typename ClassObject, typename Base>
 class class_factory : public abstract_factory<Base> {
-private:
+public:
     virtual Base* produce(const std::string&) const override { return new ClassObject; }
 };
 
@@ -37,7 +37,7 @@ void regist_class(const std::string& class_name) {
 }
 
 template <typename Base>
-std::shared_ptr<Base> create_class_obj(const std::string& class_name) {
+Base* create_class_obj(const std::string& class_name) {
     abstract_factory<Base>* factory = nullptr;
 
     {
@@ -48,9 +48,9 @@ std::shared_ptr<Base> create_class_obj(const std::string& class_name) {
         }
     }
 
-    std::shared_ptr<Base> classobj = nullptr;
+    Base* classobj = nullptr;
     if (factory) {
-        classobj = factory->produce_shared();
+        classobj = factory->produce();
     }
 
     return classobj;

@@ -17,6 +17,8 @@ public:
 template <typename Product>
 class abstract_factory : public abstarct_factory_base {
 public:
+    virtual Product* produce(const std::string& key = "") const = 0;
+
     std::unique_ptr<Product> produce_unique(const std::string& key = "") const
     {
         return std::unique_ptr<Product>(produce(key));
@@ -26,9 +28,6 @@ public:
     {
         return std::shared_ptr<Product>(produce(key));
     }
-
-private:
-    virtual Product* produce(const std::string& key = "") const = 0;
 };
 
 NEW_BASE_END
