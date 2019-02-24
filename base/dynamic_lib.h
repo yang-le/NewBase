@@ -33,21 +33,13 @@ class dynamic_lib {
 
  public:
     explicit dynamic_lib(const std::string& path) {
-        load(path);
-    }
-
-    ~dynamic_lib() {
-        unload();
-    }
-
-    void load(const std::string& path) {
         lib_ = LOAD(path.c_str());
         if (!lib_) {
             throw std::runtime_error(ERROR_STR());
         }
     }
 
-    void unload() {
+    ~dynamic_lib() {
         if (lib_) {
             (void)UNLOAD(lib_);
         }
