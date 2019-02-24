@@ -8,7 +8,6 @@ NEW_BASE_BEGIN
 // the c++14 integer_sequence
 
 namespace utility {
-
 template<class T, T... Ints>
 struct integer_sequence {	// sequence of integer parameters
     static_assert(std::is_integral<T>::value, "integer_sequence<T, I...> requires T to be an integral type.");
@@ -16,8 +15,8 @@ struct integer_sequence {	// sequence of integer parameters
     using type = integer_sequence<T, Ints...>;
     using value_type = T;
 
-    static constexpr size_t size() noexcept
-    {	// get length of parameter list
+    static constexpr size_t size() noexcept {
+        // get length of parameter list
         return (sizeof...(Ints));
     }
 };
@@ -27,8 +26,8 @@ using index_sequence = integer_sequence<size_t, Ints...>;
 
 // ALIAS TEMPLATE make_integer_sequence
 template<bool Negative, bool Zero, class Int_con, class Int_seq>
-struct make_seq
-{	// explodes gracefully below 0
+struct make_seq {
+    // explodes gracefully below 0
     static_assert(!Negative, "make_integer_sequence<T, N> requires N to be non-negative.");
 };
 
@@ -50,8 +49,6 @@ using make_index_sequence = make_integer_sequence<size_t, Size>;
 
 template<class... T>
 using index_sequence_for = make_index_sequence<sizeof...(T)>;
-
 }
 
 NEW_BASE_END
-
