@@ -216,3 +216,7 @@ ModelManifest.xml
 # Doxygen files
 html
 latex
+
+# misc
+core
+main

@@ -4,9 +4,8 @@
 using namespace nb;
 
 int main(int argc, char* argv[]) {
-
-    if (argc < 1) {
-        LOG_E << "usage: " << argv[0] << "config.json";
+    if (argc < 2) {
+        LOG_E << "usage: " << argv[0] << " config.json" << std::endl;
         return EXIT_FAILURE;
     }
 

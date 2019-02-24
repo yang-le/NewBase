@@ -4,6 +4,7 @@
 #include "base/timer.h"
 #include "base/class_factory.h"
 #include "base/macros.h"
+#include "base/log.h"
 
 NEW_BASE_BEGIN
 
@@ -27,6 +28,7 @@ class timer_node : public node_base {
 public:
     virtual bool init(const std::string& cfg_file_path, unsigned int interval) override {
         if (!initialize(cfg_file_path)) {
+            LOG_E << "initialize with config " << cfg_file_path << " failed" << std::endl;
             return false;
         }
 
