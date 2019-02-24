@@ -1,7 +1,7 @@
 {
     "modules": [
         {
-            "module_library": "/home/yangle/work/NewBase/node1/libnode1.so",
+            "module_library": "E:/git/NewBase/Debug/Node1.dll",
 			"timer_nodes": [
                 {
                     "class_name": "node1", 
@@ -12,7 +12,7 @@
             ]
         },
 		{
-            "module_library": "/home/yangle/work/NewBase/node2/libnode2.so",
+            "module_library": "E:/git/NewBase/Debug/Node2.dll",
 			"nodes": [
                 {
                     "class_name": "node2",
