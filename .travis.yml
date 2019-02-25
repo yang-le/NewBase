@@ -1,12 +1,12 @@
 language: cpp
 jobs:
   include:
-    script: cpplint --recursive base main node1 node2
-    name: cpplint
-    script: ./build.sh
-    name: build
+    - script: cpplint --recursive base main node1 node2
+      name: cpplint
+    - script: ./build.sh
+      name: build
 
-before_install:
+before_script:
     - eval "CC=gcc-4.9 && CXX=g++-4.9"
     
 addons:
