@@ -1,5 +1,7 @@
 language: cpp
-script: ./build.sh
+script:
+- cpplint --recursive base main node1 node2
+- ./build.sh
 
 matrix:
   include:
