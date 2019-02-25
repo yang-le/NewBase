@@ -21,7 +21,9 @@ namespace {
 template <typename ClassObject, typename Base>
 class class_factory : public abstract_factory<Base> {
 public:
-    virtual Base* produce(const std::string& /* key */) const override { return new ClassObject; }
+    virtual Base* produce(const std::string& /* key */) const override {
+        return new ClassObject;
+    }
 };
 
 template <typename Derived, typename Base>
