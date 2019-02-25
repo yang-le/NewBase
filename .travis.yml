@@ -1,10 +1,10 @@
 language: cpp
 jobs:
   include:
-    name: cpplint
     script: cpplint --recursive base main node1 node2
-    name: build
+    name: cpplint
     script: ./build.sh
+    name: build
 
 matrix:
   include:
