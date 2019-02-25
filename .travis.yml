@@ -1,9 +1,9 @@
 language: cpp
 jobs:
   include:
-    script: cpplint --recursive base main node1 node2
+    - script: cpplint --recursive base main node1 node2
     name: cpplint
-    script: ./build.sh
+    - script: ./build.sh
     name: build
 
 matrix:
@@ -20,5 +20,6 @@ matrix:
          - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
 
 before_install:
-    - pip install --user cpplint
     - eval "${MATRIX_EVAL}"
+
+install: pip install --user cpplint
