@@ -1,3 +1,5 @@
+// Copyright [year] <Copyright Owner>
+
 #include "base/message_bus.h"
 
 NEW_BASE_BEGIN

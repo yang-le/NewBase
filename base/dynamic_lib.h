@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <string>
 #include <map>
 #include <memory>
+#include <string>
 #include "base/macros.h"
 
 #ifdef _MSC_VER
@@ -24,39 +24,38 @@
 NEW_BASE_BEGIN
 
 class dynamic_lib {
-
 #ifdef _MSC_VER
- using lib_t = HMODULE;
+  using lib_t = HMODULE;
 #else
- using lib_t = void*;
+  using lib_t = void*;
 #endif
 
  public:
-    explicit dynamic_lib(const std::string& path) {
-        lib_ = LOAD(path.c_str());
-        if (!lib_) {
-            throw std::runtime_error(ERROR_STR());
-        }
+  explicit dynamic_lib(const std::string& path) {
+    lib_ = LOAD(path.c_str());
+    if (!lib_) {
+      throw std::runtime_error(ERROR_STR());
+    }
+  }
+
+  ~dynamic_lib() {
+    if (lib_) {
+      (void)UNLOAD(lib_);
+    }
+  }
+
+  template <typename Ret, typename... Args>
+  Ret call(const std::string& func, Args&&... args) {
+    using T = Ret(Args...);
+    T* f = reinterpret_cast<T*>(FIND(lib_, func.c_str()));
+    if (f == nullptr) {
+      throw std::runtime_error("can not find function: " + func);
     }
 
-    ~dynamic_lib() {
-        if (lib_) {
-            (void)UNLOAD(lib_);
-        }
-    }
+    return f(std::forward<Args>(args)...);
+  }
 
-    template <typename Ret, typename... Args>
-    Ret call(const std::string& func, Args&&... args) {
-        using T = Ret(Args...);
-        T* f = reinterpret_cast<T*>(FIND(lib_, func.c_str()));
-        if (f == nullptr) {
-            throw std::runtime_error("can not find function: " + func);
-        }
-
-        return f(std::forward<Args>(args)...);
-    }
-
-    lib_t lib_;
+  lib_t lib_;
 };
 
 NEW_BASE_EXPORT void load_dynamic_lib(const std::string& path);

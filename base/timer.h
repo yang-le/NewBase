@@ -1,12 +1,14 @@
-﻿#pragma once
+﻿// Copyright [year] <Copyright Owner>
 
-#include <thread>
+#pragma once
+
 #include <atomic>
-#include <functional>
-#include <queue>
-#include <mutex>
-#include <future>
 #include <chrono>
+#include <functional>
+#include <future>
+#include <mutex>
+#include <queue>
+#include <thread>
 
 #include "base/chrono_literals.h"
 #include "base/macros.h"
@@ -16,54 +18,61 @@ NEW_BASE_BEGIN
 using namespace chrono_literals;
 
 class timer {
-public:
-    template <typename F, typename... Args>
-    void start(unsigned int interval, F&& f, Args&&... args) {
-        if (!stopped_) {
-            std::lock_guard<std::mutex> lock(mutex_);
-            tasks_.emplace([=] {
-                f(args...);
-                start(interval, f, args...);
-            }, std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(interval));
-        }
+ public:
+  template <typename F, typename... Args>
+  void start(unsigned int interval, F&& f, Args&&... args) {
+    if (!stopped_) {
+      std::lock_guard<std::mutex> lock(mutex_);
+      tasks_.emplace(
+          [=] {
+            f(args...);
+            start(interval, f, args...);
+          },
+          std::chrono::high_resolution_clock::now() +
+              std::chrono::milliseconds(interval));
+    }
+  }
+
+  template <typename F, typename... Args>
+  std::future<typename std::result_of<F(Args...)>::type> start_once(
+      unsigned int interval, F&& f, Args&&... args) {
+    using return_type = decltype(f(args...));
+    auto task = std::make_shared<std::packaged_task<return_type()>>(
+        std::bind(std::forward<F>(f), std::forward<Args>(args)...));
+
+    if (!stopped_) {
+      std::lock_guard<std::mutex> lock(mutex_);
+      tasks_.emplace([task] { (*task)(); },
+                     std::chrono::high_resolution_clock::now() +
+                         std::chrono::milliseconds(interval));
     }
 
-    template <typename F, typename... Args>
-    std::future<typename std::result_of<F(Args...)>::type>
-    start_once(unsigned int interval, F&& f, Args&&... args) {
-        using return_type = decltype(f(args...));
-        auto task = std::make_shared<std::packaged_task<return_type()>>(
-            std::bind(std::forward<F>(f), std::forward<Args>(args)...));
+    return task->get_future();
+  }
 
-        if (!stopped_) {
-            std::lock_guard<std::mutex> lock(mutex_);
-            tasks_.emplace([task] {
-                (*task)();
-            }, std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(interval));
-        }
+ private:
+  struct task {
+    using time_point =
+        std::chrono::time_point<std::chrono::high_resolution_clock>;
 
-        return task->get_future();
+    template <typename F>
+    task(F func, time_point&& dead_line)
+        : func_(func), dead_line_(std::move(dead_line)) {}
+
+    bool operator<(const task& rhd) const {
+      return dead_line_ > rhd.dead_line_;
     }
 
-private:
-    struct task {
-        using time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
+    std::function<void()> func_;
+    time_point dead_line_;
+  };
 
-        template <typename F>
-        task(F func, time_point&& dead_line) : func_(func), dead_line_(std::move(dead_line)) {}
+  std::priority_queue<task> tasks_;
+  std::thread thread_;
+  std::atomic_bool stopped_;
+  std::mutex mutex_;
 
-        bool operator< (const task& rhd) const { return dead_line_ > rhd.dead_line_; }
-
-        std::function<void()> func_;
-        time_point dead_line_;
-    };
-
-    std::priority_queue<task> tasks_;
-    std::thread thread_;
-    std::atomic_bool stopped_;
-    std::mutex mutex_;
-
-    DECLARE_SINGLETON(timer);
+  DECLARE_SINGLETON(timer);
 };
 
 NEW_BASE_END
