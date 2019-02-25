@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <memory>
 #include <vector>
+#include <utility>
 #include "base/config.h"
 #include "base/dynamic_lib.h"
 #include "base/log.h"
@@ -12,7 +13,7 @@
 
 NEW_BASE_BEGIN
 
-using namespace chrono_literals;
+using chrono_literals::operator"" _ms;
 
 namespace platform {
 namespace {

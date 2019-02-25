@@ -36,17 +36,17 @@ class spdlogger {
 NEW_BASE_END
 
 #define LOG_E                                                      \
-  log::spdlogger<spdlog::level::err>(                              \
+  NEW_BASE::log::spdlogger<spdlog::level::err>(                    \
       spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, \
                          SPDLOG_FUNCTION})                         \
       .stream()
 #define LOG_W                                                      \
-  log::spdlogger<spdlog::level::warn>(                             \
+  NEW_BASE::log::spdlogger<spdlog::level::warn>(                   \
       spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, \
                          SPDLOG_FUNCTION})                         \
       .stream()
 #define LOG_I                                                      \
-  log::spdlogger<spdlog::level::info>(                             \
+  NEW_BASE::log::spdlogger<spdlog::level::info>(                   \
       spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, \
                          SPDLOG_FUNCTION})                         \
       .stream()

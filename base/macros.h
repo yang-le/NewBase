@@ -2,13 +2,15 @@
 
 #pragma once
 
+#define NEW_BASE nb
+
 #ifdef _MSC_VER
 #define NEW_BASE_EXPORT __declspec(dllexport)
 #else
 #define NEW_BASE_EXPORT __attribute__((visibility("default")))
 #endif
 
-#define NEW_BASE_BEGIN namespace nb {
+#define NEW_BASE_BEGIN namespace NEW_BASE {
 #define NEW_BASE_END }
 
 #define DISALLOW_COPY_AND_ASSIGN(classname) \

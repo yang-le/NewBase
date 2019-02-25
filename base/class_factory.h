@@ -6,6 +6,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <utility>
 #include "base/factory.h"
 #include "base/macros.h"
 #include "base/smart_ptr.h"
@@ -20,9 +21,7 @@ using base_factory_map = std::map<std::string, class_factory_map>;
 NEW_BASE_EXPORT std::mutex& get_mutex();
 NEW_BASE_EXPORT class_factory_map& get_class_factory_map(
     const std::string& base);
-}  // namespace detail
 
-namespace {
 template <typename ClassObject, typename Base>
 class class_factory : public abstract_factory<Base> {
  public:
@@ -41,7 +40,7 @@ void regist_class(const std::string& class_name) {
     factory_map.emplace(class_name, std::move(factory));
   }
 }
-}  // namespace
+}  // namespace detail
 
 template <typename Base>
 Base* create_class_obj(const std::string& class_name) {
@@ -70,7 +69,7 @@ NEW_BASE_END
   namespace {                                                    \
   struct class_register_##Base##_##Derived {                     \
     class_register_##Base##_##Derived() {                        \
-      regist_class<Derived, Base>(#Derived);                     \
+      NEW_BASE::detail::regist_class<Derived, Base>(#Derived);   \
     }                                                            \
   };                                                             \
   class_register_##Base##_##Derived register_##Base##_##Derived; \

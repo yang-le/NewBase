@@ -1,4 +1,4 @@
-﻿// Copyright [year] <Copyright Owner>
+// Copyright [year] <Copyright Owner>
 
 #pragma once
 
@@ -9,13 +9,15 @@
 #include <mutex>
 #include <queue>
 #include <thread>
+#include <memory>
+#include <utility>
 
 #include "base/chrono_literals.h"
 #include "base/macros.h"
 
 NEW_BASE_BEGIN
 
-using namespace chrono_literals;
+using chrono_literals::operator"" _ms;
 
 class timer {
  public:

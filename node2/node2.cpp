@@ -4,7 +4,8 @@
 #include "base/message_bus.h"
 #include "base/node.h"
 
-using namespace nb;
+using NEW_BASE::node;
+using NEW_BASE::message_bus;
 
 class node2 final : public node {
  private:

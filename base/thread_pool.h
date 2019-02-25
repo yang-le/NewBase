@@ -10,6 +10,8 @@
 #include <queue>
 #include <thread>
 #include <vector>
+#include <memory>
+#include <utility>
 
 #include "base/macros.h"
 

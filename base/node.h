@@ -48,4 +48,6 @@ NEW_BASE_EXPORT node_base* create_node_obj(const std::string& class_name);
 
 NEW_BASE_END
 
-#define NODE_REGIST(n) CLASS_FACTORY_REGIST(n, node_base)
+#define NODE_REGIST(n)                  \
+    using NEW_BASE::node_base;          \
+    CLASS_FACTORY_REGIST(n, node_base)
