@@ -3,7 +3,7 @@ OUT := libbase.so
 SRCS := $(wildcard *.cc)
 OBJS := $(patsubst %.cc,%.o,$(SRCS))
 
-CXXFLAGS += -c -Wall -I../external -I.. -fvisibility=hidden -fPIC -std=c++11
+CXXFLAGS += -c -Wall -I../external -I.. -fvisibility=hidden -fPIC -std=c++0x
 LDFLAGS += -shared
 
 all: $(OBJS)

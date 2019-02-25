@@ -3,7 +3,7 @@ OUT := main
 SRCS := $(wildcard *.cpp)
 OBJS := $(patsubst %.cpp,%.o,$(SRCS))
 
-CXXFLAGS += -c -Wall -I../external -I.. -std=c++11
+CXXFLAGS += -c -Wall -I../external -I.. -std=c++0x
 LDFLAGS += -L../base -lbase -ldl -pthread
 
 all: $(OBJS)
