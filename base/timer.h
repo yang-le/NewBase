@@ -23,24 +23,14 @@ class timer {
  public:
   template <typename F, typename... Args>
   void start(unsigned int interval, F&& f, Args&&... args) {
-    if (!stopped_) {
-      std::lock_guard<std::mutex> lock(mutex_);
-      tasks_.emplace(
-          [=] {
-            f(args...);
-            start(interval, f, args...);
-          },
-          std::chrono::high_resolution_clock::now() +
-              std::chrono::milliseconds(interval));
-    }
+      std::function<void()> task = std::bind(std::forward<F>(f), std::forward<Args>(args)...);
+      start(interval, task);
   }
 
-  template <typename F>
-  void start(unsigned int interval, F&& f) {
+  void start(unsigned int interval, std::function<void()> f) {
       if (!stopped_) {
           std::lock_guard<std::mutex> lock(mutex_);
-          tasks_.emplace(
-              [=] {
+          tasks_.emplace([=] {
               f();
               start(interval, f);
           },
