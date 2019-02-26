@@ -11,7 +11,7 @@ debug: $(SUBDIRS)
 
 subdirs: $(SUBDIRS)
 	for dir in $(SUBDIRS); \
-	do CXXFLAGS='-Werror -Ofast' $(MAKE) -C $$dir $(MAKECMDGOALS); \
+	do CXXFLAGS='-Werror -Ofast' LDFLAGS='-s' $(MAKE) -C $$dir $(MAKECMDGOALS); \
 	done
 
 cpplint:
