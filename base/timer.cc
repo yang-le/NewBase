@@ -8,7 +8,7 @@ DEFINE_SINGLETON(timer);
 timer::timer() : stopped_(false) {
   thread_ = std::thread([this] {
     while (!stopped_ || !tasks_.empty()) {
-      std::this_thread::sleep_for(1_ms);
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
       if (!tasks_.empty()) {
         task t = std::move(tasks_.top());

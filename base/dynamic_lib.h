@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <stdexcept>
 #include "base/macros.h"
 
 #ifdef _MSC_VER
@@ -27,7 +28,7 @@ class dynamic_lib {
 #ifdef _MSC_VER
   using lib_t = HMODULE;
 #else
-  using lib_t = void*;
+  typedef void* lib_t;
 #endif
 
  public:
@@ -46,7 +47,7 @@ class dynamic_lib {
 
   template <typename Ret, typename... Args>
   Ret call(const std::string& func, Args&&... args) {
-    using T = Ret(Args...);
+    typedef Ret T(Args...);
     T* f = reinterpret_cast<T*>(FIND(lib_, func.c_str()));
     if (f == nullptr) {
       throw std::runtime_error("can not find function: " + func);

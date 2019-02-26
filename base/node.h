@@ -10,14 +10,14 @@
 namespace nb {
 class node_base {
  public:
-  virtual ~node_base() = default;
+  virtual ~node_base() {};
   virtual bool init(const std::string& /* cfg_file_path */,
                     unsigned int /* interval */ = 0) = 0;
 };
 
 class node : public node_base {
  public:
-  bool init(const std::string& cfg_file_path, unsigned int) override {
+  bool init(const std::string& cfg_file_path, unsigned int) {
     return initialize(cfg_file_path);
   }
 
@@ -27,7 +27,7 @@ class node : public node_base {
 
 class timer_node : public node_base {
  public:
-  bool init(const std::string& cfg_file_path, unsigned int interval) override {
+  bool init(const std::string& cfg_file_path, unsigned int interval) {
     if (!initialize(cfg_file_path)) {
       return false;
     }

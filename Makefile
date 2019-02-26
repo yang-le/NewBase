@@ -6,12 +6,12 @@ clean: subdirs
 
 debug: $(SUBDIRS)
 	for dir in $(SUBDIRS); \
-	do CXXFLAGS='-Werror -Og -g' $(MAKE) -C $$dir; \
+	do CXXFLAGS='-D_GLIBCXX_USE_NANOSLEEP -Werror -Og -g' $(MAKE) -C $$dir; \
 	done
 
 subdirs: $(SUBDIRS)
 	for dir in $(SUBDIRS); \
-	do CXXFLAGS='-Werror -Ofast' $(MAKE) -C $$dir $(MAKECMDGOALS); \
+	do CXXFLAGS='-D_GLIBCXX_USE_NANOSLEEP -Werror -Ofast' LDFLAGS='-s' $(MAKE) -C $$dir $(MAKECMDGOALS); \
 	done
 
 cpplint:

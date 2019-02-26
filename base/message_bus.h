@@ -20,8 +20,8 @@ class message_bus {
   template <typename F>
   void subscribe(const std::string& topic, const F& f) {
     std::lock_guard<std::mutex> lock(mutex_);
-    map_.emplace(topic,
-                 std::bind(&invoker<F>::apply, f, std::placeholders::_1));
+    map_.insert(std::make_pair(topic,
+                 std::bind(&invoker<F>::apply, f, std::placeholders::_1)));
   }
 
   template <typename... Args>
@@ -37,7 +37,7 @@ class message_bus {
   template <typename F>
   struct invoker {
     static void apply(const F& f, const void* args) {
-      using arg_t = typename utility::function_traits<F>::arg_tuple_t;
+      typedef typename utility::function_traits<F>::arg_tuple_t arg_t;
       const arg_t* tp = static_cast<const arg_t*>(args);
       call(f,
            utility::make_index_sequence<utility::function_traits<F>::arity>{},

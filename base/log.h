@@ -3,6 +3,7 @@
 #pragma once
 
 #include <sstream>
+#if 0
 #include "external/spdlog/spdlog.h"
 
 namespace nb {
@@ -49,3 +50,9 @@ class spdlogger {
       spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, \
                          SPDLOG_FUNCTION})                         \
       .stream()
+#else
+#include <iostream>
+#define LOG_E std::cerr
+#define LOG_W std::cerr
+#define LOG_I std::cout
+#endif

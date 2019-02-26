@@ -12,9 +12,9 @@ struct function_traits;
 
 template <typename Ret, typename... Args>
 struct function_traits<Ret(Args...)> {
-  using return_type = Ret;
-  using type = Ret(Args...);
-  using arg_tuple_t = std::tuple<Args...>;
+  typedef Ret return_type;
+  typedef Ret type(Args...);
+  typedef typename std::tuple<Args...> arg_tuple_t;
   static constexpr size_t arity = sizeof...(Args);
 
   template <size_t I>
@@ -22,7 +22,7 @@ struct function_traits<Ret(Args...)> {
     static_assert(I < arity,
                   "function_traits<F>::arg<I> requires I to be less than "
                   "function_traits<F>::arity.");
-    using type = typename std::tuple_element<I, arg_tuple_t>::type;
+    typedef typename std::tuple_element<I, arg_tuple_t>::type type;
   };
 };
 

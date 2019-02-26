@@ -13,7 +13,7 @@ std::mutex& get_mutex() { return mutex_; }
 
 class_factory_map& get_class_factory_map(const std::string& base) {
   if (map_.find(base) == map_.end()) {
-    map_.emplace(base, class_factory_map());
+    map_.insert(std::make_pair(base, class_factory_map()));
   }
 
   return map_[base];

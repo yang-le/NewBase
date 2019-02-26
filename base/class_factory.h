@@ -13,9 +13,8 @@
 
 namespace nb {
 namespace detail {
-using class_factory_map =
-    std::map<std::string, std::unique_ptr<abstarct_factory_base>>;
-using base_factory_map = std::map<std::string, class_factory_map>;
+typedef std::map<std::string, std::unique_ptr<abstarct_factory_base>> class_factory_map;
+typedef std::map<std::string, class_factory_map> base_factory_map;
 
 NEW_BASE_EXPORT std::mutex& get_mutex();
 NEW_BASE_EXPORT class_factory_map& get_class_factory_map(
@@ -24,7 +23,7 @@ NEW_BASE_EXPORT class_factory_map& get_class_factory_map(
 template <typename ClassObject, typename Base>
 class class_factory : public abstract_factory<Base> {
  public:
-  Base* produce(const std::string& /* key */) const override {
+  Base* produce(const std::string& /* key */) const {
     return new ClassObject;
   }
 };
@@ -36,7 +35,7 @@ void regist_class(const std::string& class_name) {
   {
     std::lock_guard<std::mutex> lock(detail::get_mutex());
     auto& factory_map = detail::get_class_factory_map(typeid(Base).name());
-    factory_map.emplace(class_name, std::move(factory));
+    factory_map.insert(std::make_pair(class_name, std::move(factory)));
   }
 }
 }  // namespace detail

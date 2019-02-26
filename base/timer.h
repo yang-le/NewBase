@@ -12,12 +12,12 @@
 #include <thread>
 #include <utility>
 
-#include "base/chrono_literals.h"
+//#include "base/chrono_literals.h"
 #include "base/macros.h"
 
 namespace nb {
 
-using chrono_literals::operator"" _ms;
+//using chrono_literals::operator"" _ms;
 
 class timer {
  public:
@@ -44,7 +44,7 @@ class timer {
   template <typename F, typename... Args>
   std::future<typename std::result_of<F(Args...)>::type> start_once(
       unsigned int interval, F&& f, Args&&... args) {
-    using return_type = decltype(f(args...));
+    typedef decltype(f(args...)) return_type;
     auto task = std::make_shared<std::packaged_task<return_type()>>(
         std::bind(std::forward<F>(f), std::forward<Args>(args)...));
 
@@ -60,8 +60,7 @@ class timer {
 
  private:
   struct task {
-    using time_point =
-        std::chrono::time_point<std::chrono::high_resolution_clock>;
+    typedef std::chrono::time_point<std::chrono::high_resolution_clock> time_point;
 
     template <typename F>
     task(F func, time_point&& dead_line)

@@ -5,17 +5,15 @@
 #include <type_traits>
 
 namespace nb {
-
-// the c++14 integer_sequence
-
 namespace utility {
+// the c++14 integer_sequence
 template <class T, T... Ints>
 struct integer_sequence {  // sequence of integer parameters
   static_assert(std::is_integral<T>::value,
                 "integer_sequence<T, I...> requires T to be an integral type.");
 
-  using type = integer_sequence<T, Ints...>;
-  using value_type = T;
+  typedef integer_sequence<T, Ints...> type;
+  typedef T value_type;
 
   static constexpr size_t size() noexcept {
     // get length of parameter list
@@ -24,7 +22,7 @@ struct integer_sequence {  // sequence of integer parameters
 };
 
 template <size_t... Ints>
-using index_sequence = integer_sequence<size_t, Ints...>;
+struct index_sequence : integer_sequence<size_t, Ints...> {};
 
 // ALIAS TEMPLATE make_integer_sequence
 template <bool Negative, bool Zero, class Int_con, class Int_seq>
@@ -47,15 +45,14 @@ struct make_seq<false, false, std::integral_constant<T, Ix>,
                integer_sequence<T, Ix - 1, Ints...>> {};
 
 template <class T, T Size>
-using make_integer_sequence =
-    typename make_seq < Size<0, Size == 0, std::integral_constant<T, Size>,
-                             integer_sequence<T>>::type;
+struct make_integer_sequence :
+    make_seq < Size<0, Size == 0, std::integral_constant<T, Size>,
+                             integer_sequence<T>>::type {};
 
 template <size_t Size>
-using make_index_sequence = make_integer_sequence<size_t, Size>;
+struct make_index_sequence : make_integer_sequence<size_t, Size> {};
 
 template <class... T>
-using index_sequence_for = make_index_sequence<sizeof...(T)>;
+struct index_sequence_for : make_index_sequence<sizeof...(T)> {};
 }  // namespace utility
-
 }  // namespace nb
