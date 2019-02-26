@@ -11,7 +11,7 @@
 #include "base/macros.h"
 #include "base/smart_ptr.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 namespace detail {
 using class_factory_map =
@@ -63,13 +63,13 @@ Base* create_class_obj(const std::string& class_name) {
   return classobj;
 }
 
-NEW_BASE_END
+}
 
 #define CLASS_FACTORY_REGIST(Derived, Base)                      \
   namespace {                                                    \
   struct class_register_##Base##_##Derived {                     \
     class_register_##Base##_##Derived() {                        \
-      NEW_BASE::detail::regist_class<Derived, Base>(#Derived);   \
+      nb::detail::regist_class<Derived, Base>(#Derived);         \
     }                                                            \
   };                                                             \
   class_register_##Base##_##Derived register_##Base##_##Derived; \

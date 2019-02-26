@@ -3,10 +3,9 @@
 #pragma once
 
 #include <sstream>
-#include "base/macros.h"
 #include "external/spdlog/spdlog.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 namespace log {
 template <spdlog::level::level_enum level>
@@ -33,20 +32,20 @@ class spdlogger {
 };
 }  // namespace log
 
-NEW_BASE_END
+}  // namespace nb
 
 #define LOG_E                                                      \
-  NEW_BASE::log::spdlogger<spdlog::level::err>(                    \
+  nb::log::spdlogger<spdlog::level::err>(                          \
       spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, \
                          SPDLOG_FUNCTION})                         \
       .stream()
 #define LOG_W                                                      \
-  NEW_BASE::log::spdlogger<spdlog::level::warn>(                   \
+  nb::log::spdlogger<spdlog::level::warn>(                         \
       spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, \
                          SPDLOG_FUNCTION})                         \
       .stream()
 #define LOG_I                                                      \
-  NEW_BASE::log::spdlogger<spdlog::level::info>(                   \
+  nb::log::spdlogger<spdlog::level::info>(                         \
       spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, \
                          SPDLOG_FUNCTION})                         \
       .stream()

@@ -22,7 +22,7 @@
 #define ERROR_STR() dlerror()
 #endif
 
-NEW_BASE_BEGIN
+namespace nb {
 
 class dynamic_lib {
 #ifdef _MSC_VER
@@ -61,4 +61,4 @@ class dynamic_lib {
 
 NEW_BASE_EXPORT void load_dynamic_lib(const std::string& path);
 
-NEW_BASE_END
+}

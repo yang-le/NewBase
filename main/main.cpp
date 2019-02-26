@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
     return EXIT_FAILURE;
   }
 
-  if (!NEW_BASE::platform::run(argv[1])) {
+  if (!nb::platform::run(argv[1])) {
     LOG_E << "platform run failed.";
     return EXIT_FAILURE;
   }

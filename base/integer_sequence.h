@@ -3,9 +3,8 @@
 #pragma once
 
 #include <type_traits>
-#include "base/macros.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 // the c++14 integer_sequence
 
@@ -59,4 +58,4 @@ template <class... T>
 using index_sequence_for = make_index_sequence<sizeof...(T)>;
 }  // namespace utility
 
-NEW_BASE_END
+}  // namespace nb

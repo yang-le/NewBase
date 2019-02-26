@@ -15,7 +15,7 @@
 #include "base/chrono_literals.h"
 #include "base/macros.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 using chrono_literals::operator"" _ms;
 
@@ -83,4 +83,4 @@ class timer {
   DECLARE_SINGLETON(timer);
 };
 
-NEW_BASE_END
+}  // namespace nb

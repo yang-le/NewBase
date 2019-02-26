@@ -7,7 +7,7 @@
 #include "base/macros.h"
 #include "base/timer.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 class node_base {
  public:
@@ -28,8 +28,7 @@ class node : public node_base {
 
 class timer_node : public node_base {
  public:
-  bool init(const std::string& cfg_file_path,
-                    unsigned int interval) override {
+  bool init(const std::string& cfg_file_path, unsigned int interval) override {
     if (!initialize(cfg_file_path)) {
       return false;
     }
@@ -46,8 +45,8 @@ class timer_node : public node_base {
 
 NEW_BASE_EXPORT node_base* create_node_obj(const std::string& class_name);
 
-NEW_BASE_END
+}
 
-#define NODE_REGIST(n)                  \
-    using NEW_BASE::node_base;          \
-    CLASS_FACTORY_REGIST(n, node_base)
+#define NODE_REGIST(n) \
+  using nb::node_base; \
+  CLASS_FACTORY_REGIST(n, node_base)

@@ -11,7 +11,7 @@
 #include "base/log.h"
 #include "base/node.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 using chrono_literals::operator"" _ms;
 
@@ -121,4 +121,4 @@ bool run(const std::string& config_file) {
 }
 }  // namespace platform
 
-NEW_BASE_END
+}

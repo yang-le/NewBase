@@ -2,7 +2,7 @@
 
 #include "base/class_factory.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 namespace detail {
 namespace {
@@ -21,4 +21,4 @@ class_factory_map& get_class_factory_map(const std::string& base) {
 }
 }  // namespace detail
 
-NEW_BASE_END
+}

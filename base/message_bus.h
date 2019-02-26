@@ -6,13 +6,14 @@
 #include <mutex>
 #include <string>
 #include <tuple>
-#include <utility>
 #include <unordered_map>
+#include <utility>
+
 #include "base/function_traits.h"
 #include "base/integer_sequence.h"
 #include "base/macros.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 class message_bus {
  public:
@@ -56,4 +57,4 @@ class message_bus {
   DECLARE_SINGLETON(message_bus);
 };
 
-NEW_BASE_END
+}  // namespace nb

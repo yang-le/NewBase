@@ -3,9 +3,8 @@
 #pragma once
 
 #include <tuple>
-#include "base/macros.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 namespace utility {
 template <typename F>
@@ -56,4 +55,4 @@ template <typename Callable>
 struct function_traits : function_traits<decltype(&Callable::operator())> {};
 }  // namespace utility
 
-NEW_BASE_END
+}  // namespace nb

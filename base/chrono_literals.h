@@ -3,9 +3,8 @@
 #pragma once
 
 #include <chrono>
-#include "base/macros.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 // the c++14 std::chrono_literals
 
@@ -84,4 +83,4 @@ inline std::chrono::duration<double, std::nano> operator"" _ns(
 }  // namespace chrono_literals
 }  // namespace literals
 
-NEW_BASE_END
+}  // namespace nb

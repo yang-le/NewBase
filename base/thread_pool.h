@@ -6,16 +6,14 @@
 #include <condition_variable>
 #include <functional>
 #include <future>
+#include <memory>
 #include <mutex>
 #include <queue>
 #include <thread>
-#include <vector>
-#include <memory>
 #include <utility>
+#include <vector>
 
-#include "base/macros.h"
-
-NEW_BASE_BEGIN
+namespace nb {
 
 class thread_pool {
  public:
@@ -84,4 +82,4 @@ class thread_pool {
   std::condition_variable ready_;
 };
 
-NEW_BASE_END
+}  // namespace nb

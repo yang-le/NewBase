@@ -2,7 +2,7 @@
 
 #include "base/timer.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 DEFINE_SINGLETON(timer);
 
@@ -32,4 +32,4 @@ timer::~timer() {
   }
 }
 
-NEW_BASE_END
+}

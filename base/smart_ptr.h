@@ -4,9 +4,8 @@
 
 #include <memory>
 #include <utility>  // for std::forward
-#include "base/macros.h"
 
-NEW_BASE_BEGIN
+namespace nb {
 
 // the c++14 make_unique
 
@@ -17,4 +16,4 @@ std::unique_ptr<T> make_unique(Args&&... args) {
 }
 }  // namespace utility
 
-NEW_BASE_END
+}  // namespace nb

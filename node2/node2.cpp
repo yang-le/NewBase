@@ -4,8 +4,8 @@
 #include "base/message_bus.h"
 #include "base/node.h"
 
-using NEW_BASE::node;
-using NEW_BASE::message_bus;
+using nb::message_bus;
+using nb::node;
 
 class node2 final : public node {
  private:

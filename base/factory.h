@@ -1,14 +1,13 @@
+// Copyright [year] <Copyright Owner>
+
 #pragma once
 
 #include <functional>
 #include <map>
 #include <memory>
 #include <string>
-// Copyright [year] <Copyright Owner>
 
-#include "base/macros.h"
-
-NEW_BASE_BEGIN
+namespace nb {
 
 class abstarct_factory_base {
   // this base class is used to hide the template parameters.
@@ -30,4 +29,4 @@ class abstract_factory : public abstarct_factory_base {
   }
 };
 
-NEW_BASE_END
+}  // namespace nb
