@@ -6,10 +6,10 @@
 #include <chrono>
 #include <functional>
 #include <future>
+#include <memory>
 #include <mutex>
 #include <queue>
 #include <thread>
-#include <memory>
 #include <utility>
 
 #include "base/chrono_literals.h"
@@ -23,20 +23,22 @@ class timer {
  public:
   template <typename F, typename... Args>
   void start(unsigned int interval, F&& f, Args&&... args) {
-      std::function<void()> task = std::bind(std::forward<F>(f), std::forward<Args>(args)...);
-      start(interval, task);
+    std::function<void()> task =
+        std::bind(std::forward<F>(f), std::forward<Args>(args)...);
+    start(interval, task);
   }
 
   void start(unsigned int interval, std::function<void()> f) {
-      if (!stopped_) {
-          std::lock_guard<std::mutex> lock(mutex_);
-          tasks_.emplace([=] {
-              f();
-              start(interval, f);
+    if (!stopped_) {
+      std::lock_guard<std::mutex> lock(mutex_);
+      tasks_.emplace(
+          [=] {
+            f();
+            start(interval, f);
           },
-              std::chrono::high_resolution_clock::now() +
+          std::chrono::high_resolution_clock::now() +
               std::chrono::milliseconds(interval));
-      }
+    }
   }
 
   template <typename F, typename... Args>
