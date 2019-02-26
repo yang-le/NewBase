@@ -4,9 +4,14 @@ all: subdirs
 
 clean: subdirs
 
+debug: $(SUBDIRS)
+	for dir in $(SUBDIRS); \
+	do CXXFLAGS='-Werror -Og -g' $(MAKE) -C $$dir; \
+	done
+
 subdirs: $(SUBDIRS)
 	for dir in $(SUBDIRS); \
-	do $(MAKE) -C $$dir $(MAKECMDGOALS); \
+	do CXXFLAGS='-Werror -Ofast' $(MAKE) -C $$dir $(MAKECMDGOALS); \
 	done
 
 cpplint:
