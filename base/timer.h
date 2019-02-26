@@ -35,6 +35,20 @@ class timer {
     }
   }
 
+  template <typename F>
+  void start(unsigned int interval, F&& f) {
+      if (!stopped_) {
+          std::lock_guard<std::mutex> lock(mutex_);
+          tasks_.emplace(
+              [=] {
+              f();
+              start(interval, f);
+          },
+              std::chrono::high_resolution_clock::now() +
+              std::chrono::milliseconds(interval));
+      }
+  }
+
   template <typename F, typename... Args>
   std::future<typename std::result_of<F(Args...)>::type> start_once(
       unsigned int interval, F&& f, Args&&... args) {
