@@ -3,7 +3,6 @@
 #include "base/class_factory.h"
 
 namespace nb {
-
 namespace detail {
 namespace {
 std::mutex mutex_;
@@ -20,5 +19,4 @@ class_factory_map& get_class_factory_map(const std::string& base) {
   return map_[base];
 }
 }  // namespace detail
-
-}
+}  // namespace nb

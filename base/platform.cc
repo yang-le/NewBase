@@ -4,17 +4,14 @@
 #include <csignal>
 #include <cstdlib>
 #include <memory>
-#include <vector>
 #include <utility>
+#include <vector>
 #include "base/config.h"
 #include "base/dynamic_lib.h"
 #include "base/log.h"
 #include "base/node.h"
 
 namespace nb {
-
-using chrono_literals::operator"" _ms;
-
 namespace platform {
 namespace {
 enum state : std::uint8_t {
@@ -23,6 +20,8 @@ enum state : std::uint8_t {
   STATE_SHUTTING_DOWN,
   STATE_SHUTDOWN,
 };
+
+using chrono_literals::operator"" _ms;
 
 std::atomic<state> state_;
 std::vector<std::unique_ptr<node_base>> nodes_;
@@ -120,5 +119,4 @@ bool run(const std::string& config_file) {
   return true;
 }
 }  // namespace platform
-
-}
+}  // namespace nb

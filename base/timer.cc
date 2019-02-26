@@ -3,7 +3,6 @@
 #include "base/timer.h"
 
 namespace nb {
-
 DEFINE_SINGLETON(timer);
 
 timer::timer() : stopped_(false) {
@@ -31,5 +30,4 @@ timer::~timer() {
     thread_.join();
   }
 }
-
-}
+}  // namespace nb

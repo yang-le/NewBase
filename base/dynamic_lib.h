@@ -23,7 +23,6 @@
 #endif
 
 namespace nb {
-
 class dynamic_lib {
 #ifdef _MSC_VER
   using lib_t = HMODULE;
@@ -60,5 +59,4 @@ class dynamic_lib {
 };
 
 NEW_BASE_EXPORT void load_dynamic_lib(const std::string& path);
-
-}
+}  // namespace nb

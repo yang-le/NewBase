@@ -8,7 +8,6 @@
 #include "base/timer.h"
 
 namespace nb {
-
 class node_base {
  public:
   virtual ~node_base() = default;
@@ -44,8 +43,7 @@ class timer_node : public node_base {
 };
 
 NEW_BASE_EXPORT node_base* create_node_obj(const std::string& class_name);
-
-}
+}  // namespace nb
 
 #define NODE_REGIST(n) \
   using nb::node_base; \

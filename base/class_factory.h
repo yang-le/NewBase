@@ -12,7 +12,6 @@
 #include "base/smart_ptr.h"
 
 namespace nb {
-
 namespace detail {
 using class_factory_map =
     std::map<std::string, std::unique_ptr<abstarct_factory_base>>;
@@ -62,8 +61,7 @@ Base* create_class_obj(const std::string& class_name) {
 
   return classobj;
 }
-
-}
+}  // namespace nb
 
 #define CLASS_FACTORY_REGIST(Derived, Base)                      \
   namespace {                                                    \
