@@ -1,18 +1,18 @@
-#include "base/platform.h"
-#include "base/log.h"
+// Copyright [year] <Copyright Owner>
 
-using namespace nb;
+#include "base/log.h"
+#include "base/platform.h"
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        LOG_E << "usage: " << argv[0] << " config.json" << std::endl;
-        return EXIT_FAILURE;
-    }
+  if (argc < 2) {
+    LOG_E << "usage: " << argv[0] << " config.json" << std::endl;
+    return EXIT_FAILURE;
+  }
 
-    if (!platform::run(argv[1])) {
-        LOG_E << "platform run failed.";
-        return EXIT_FAILURE;
-    }
+  if (!nb::platform::run(argv[1])) {
+    LOG_E << "platform run failed.";
+    return EXIT_FAILURE;
+  }
 
-    return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

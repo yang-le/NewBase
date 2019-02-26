@@ -1,18 +1,8 @@
 language: cpp
-script: ./build.sh
-
-matrix:
+jobs:
   include:
-    # works on Precise and Trusty
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-4.9
-      env:
-         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
-
-before_install:
-    - eval "${MATRIX_EVAL}"
+    - script: make cpplint
+      name: cpplint
+      install: pip install --user cpplint
+    - script: make
+      name: build

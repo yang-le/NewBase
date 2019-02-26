@@ -1,21 +1,24 @@
-#include "base/log.h"
-#include "base/node.h"
-#include "base/message_bus.h"
+// Copyright [year] <Copyright Owner>
 
-using namespace nb;
+#include "base/log.h"
+#include "base/message_bus.h"
+#include "base/node.h"
+
+using nb::message_bus;
+using nb::node;
 
 class node2 final : public node {
-private:
-    virtual bool initialize(const std::string& /* cfg */) override {
-        LOG_I << "I'm node2" << std::endl;
+ private:
+  bool initialize(const std::string& /* cfg */) override {
+    LOG_I << "I'm node2" << std::endl;
 
-        message_bus::instance().subscribe("demo_topic", [] (const char* message){
-            LOG_I << "[node2] Recv: " << message << std::endl;
-            message_bus::instance().publish("echo_topic", message);
-        });
+    message_bus::instance().subscribe("demo_topic", [](const char* message) {
+      LOG_I << "[node2] Recv: " << message << std::endl;
+      message_bus::instance().publish("echo_topic", message);
+    });
 
-        return true;
-    }
+    return true;
+  }
 };
 
 NODE_REGIST(node2);
