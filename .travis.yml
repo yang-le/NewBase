@@ -3,17 +3,6 @@ jobs:
   include:
     - script: cpplint --recursive base main node1 node2
       name: cpplint
+      install: pip install --user cpplint
     - script: ./build.sh
       name: build
-
-before_script:
-    - eval "CC=gcc-4.9 && CXX=g++-4.9"
-    
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.9
-      
-install: pip install --user cpplint
