@@ -1,8 +1,8 @@
 language: cpp
 jobs:
   include:
-    - script: cpplint --recursive base main node1 node2
+    - script: make cpplint
       name: cpplint
       install: pip install --user cpplint
-    - script: ./build.sh
+    - script: make
       name: build
