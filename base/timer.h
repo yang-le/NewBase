@@ -56,7 +56,8 @@ class timer {
 
  private:
   struct task {
-    typedef std::chrono::time_point<std::chrono::high_resolution_clock> time_point;
+    typedef std::chrono::time_point<std::chrono::high_resolution_clock>
+        time_point;
 
     template <typename F>
     task(F func, time_point&& dead_line)

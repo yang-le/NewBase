@@ -1,12 +1,12 @@
 // Copyright [year] <Copyright Owner>
 
+#include "base/platform.h"
+#include <atomic>
 #include <csignal>
 #include <cstdlib>
-#include <atomic>
 #include <memory>
 #include <utility>
 #include <vector>
-#include "base/platform.h"
 #include "base/config.h"
 #include "base/dynamic_lib.h"
 #include "base/log.h"
@@ -80,7 +80,8 @@ bool run(const std::string& config_file) {
 
     for (auto c : m["nodes"]) {
       LOG_I << "class_name: " << c["class_name"] << std::endl;
-      auto n = std::unique_ptr<node_base>(create_node_obj(c["class_name"].asString()));
+      auto n = std::unique_ptr<node_base>(
+          create_node_obj(c["class_name"].asString()));
       if (n == nullptr) {
         LOG_E << "create_node_obj " << c["class_name"] << " failed!"
               << std::endl;
@@ -97,7 +98,8 @@ bool run(const std::string& config_file) {
 
     for (auto c : m["timer_nodes"]) {
       LOG_I << "class_name: " << c["class_name"] << std::endl;
-      auto n = std::unique_ptr<node_base>(create_node_obj(c["class_name"].asString()));
+      auto n = std::unique_ptr<node_base>(
+          create_node_obj(c["class_name"].asString()));
       if (n == nullptr) {
         LOG_E << "create_node_obj " << c["class_name"] << " failed!"
               << std::endl;

@@ -13,7 +13,8 @@
 
 namespace nb {
 namespace detail {
-typedef std::map<std::string, std::unique_ptr<abstarct_factory_base>> class_factory_map;
+typedef std::map<std::string, std::unique_ptr<abstarct_factory_base>>
+    class_factory_map;
 typedef std::map<std::string, class_factory_map> base_factory_map;
 
 NEW_BASE_EXPORT std::mutex& get_mutex();
@@ -23,9 +24,7 @@ NEW_BASE_EXPORT class_factory_map& get_class_factory_map(
 template <typename ClassObject, typename Base>
 class class_factory : public abstract_factory<Base> {
  public:
-  Base* produce(const std::string& /* key */) const {
-    return new ClassObject;
-  }
+  Base* produce(const std::string& /* key */) const { return new ClassObject; }
 };
 
 template <typename Derived, typename Base>
