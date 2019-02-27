@@ -2,6 +2,7 @@
 
 #include <csignal>
 #include <cstdlib>
+#include <atomic>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -14,7 +15,8 @@
 namespace nb {
 namespace platform {
 namespace {
-enum state : std::uint8_t {
+typedef std::uint8_t state;
+enum /*state : std::uint8_t*/ {
   STATE_UNINITIALIZED = 0,
   STATE_INITIALIZED,
   STATE_SHUTTING_DOWN,

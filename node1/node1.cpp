@@ -4,9 +4,9 @@
 #include "base/message_bus.h"
 #include "base/node.h"
 
-class node1 final : public nb::timer_node {
+class node1 : public nb::timer_node {
  private:
-  bool initialize(const std::string& /* cfg */) override {
+  bool initialize(const std::string& /* cfg */) {
     LOG_I << "I'm node1" << std::endl;
 
     nb::message_bus::instance().subscribe("echo_topic", [](const char* reply) {
@@ -16,7 +16,7 @@ class node1 final : public nb::timer_node {
     return true;
   }
 
-  void process() override {
+  void process() {
     nb::message_bus::instance().publish("demo_topic", "hello from node1");
   }
 };

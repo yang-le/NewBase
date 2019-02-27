@@ -3,7 +3,7 @@ OUT := libnode1.so
 SRCS := $(wildcard *.cpp)
 OBJS := $(patsubst %.cpp,%.o,$(SRCS))
 
-CXXFLAGS += -c -Wall -Wextra -I../external -I.. -fvisibility=hidden -fPIC -std=c++0x
+CXXFLAGS += -c -Wall -Wextra -I.. -fvisibility=hidden -fPIC -std=c++0x
 LDFLAGS += -shared
 
 all: $(OBJS)

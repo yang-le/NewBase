@@ -7,9 +7,9 @@
 using nb::message_bus;
 using nb::node;
 
-class node2 final : public node {
+class node2 : public node {
  private:
-  bool initialize(const std::string& /* cfg */) override {
+  bool initialize(const std::string& /* cfg */) {
     LOG_I << "I'm node2" << std::endl;
 
     message_bus::instance().subscribe("demo_topic", [](const char* message) {
