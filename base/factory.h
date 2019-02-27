@@ -12,7 +12,7 @@ namespace nb {
 class abstarct_factory_base {
   // this base class is used to hide the template parameters.
  public:
-  virtual ~abstarct_factory_base() {};
+  virtual ~abstarct_factory_base() {}
 };
 
 template <typename Product>

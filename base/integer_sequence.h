@@ -12,7 +12,6 @@ struct integer_sequence {  // sequence of integer parameters
   static_assert(std::is_integral<T>::value,
                 "integer_sequence<T, I...> requires T to be an integral type.");
 
-  typedef integer_sequence<T, Ints...> type;
   typedef T value_type;
 
   static constexpr size_t size() noexcept {
@@ -46,11 +45,27 @@ struct make_seq<false, false, std::integral_constant<T, Ix>,
 
 template <class T, T Size>
 struct make_integer_sequence :
-    make_seq < Size<0, Size == 0, std::integral_constant<T, Size>,
-                             integer_sequence<T>>::type {};
+    make_seq< Size<0, Size == 0, std::integral_constant<T, Size>,
+                             integer_sequence<T>> {};
+
+// ALIAS TEMPLATE make_index_sequence
+
+// ends recursion at 0
+template <size_t... Ints>
+struct make_seq<false, true, std::integral_constant<size_t, 0>,
+    index_sequence<Ints... >> : index_sequence<Ints...> {};
+
+// counts down to 0
+template <size_t Ix, size_t... Ints>
+struct make_seq<false, false, std::integral_constant<size_t, Ix>,
+    index_sequence<Ints... >>
+    : make_seq<false, Ix == 1, std::integral_constant<size_t, Ix - 1>,
+    index_sequence<Ix - 1, Ints... >> {};
 
 template <size_t Size>
-struct make_index_sequence : make_integer_sequence<size_t, Size> {};
+struct make_index_sequence :
+    make_seq< Size<0, Size == 0, std::integral_constant<size_t, Size>,
+    index_sequence<>> {};
 
 template <class... T>
 struct index_sequence_for : make_index_sequence<sizeof...(T)> {};

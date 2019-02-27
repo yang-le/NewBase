@@ -12,13 +12,9 @@
 #include <thread>
 #include <utility>
 
-//#include "base/chrono_literals.h"
 #include "base/macros.h"
 
 namespace nb {
-
-//using chrono_literals::operator"" _ms;
-
 class timer {
  public:
   template <typename F, typename... Args>

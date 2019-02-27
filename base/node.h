@@ -10,7 +10,7 @@
 namespace nb {
 class node_base {
  public:
-  virtual ~node_base() {};
+  virtual ~node_base() {}
   virtual bool init(const std::string& /* cfg_file_path */,
                     unsigned int /* interval */ = 0) = 0;
 };

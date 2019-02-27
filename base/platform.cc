@@ -1,11 +1,11 @@
 // Copyright [year] <Copyright Owner>
 
-#include "base/platform.h"
 #include <csignal>
 #include <cstdlib>
 #include <memory>
 #include <utility>
 #include <vector>
+#include "base/platform.h"
 #include "base/config.h"
 #include "base/dynamic_lib.h"
 #include "base/log.h"
@@ -20,8 +20,6 @@ enum state : std::uint8_t {
   STATE_SHUTTING_DOWN,
   STATE_SHUTDOWN,
 };
-
-using chrono_literals::operator"" _ms;
 
 std::atomic<state> state_;
 std::vector<std::unique_ptr<node_base>> nodes_;
@@ -62,7 +60,7 @@ bool init() {
 void loop() {
   while ((get_state() != STATE_SHUTTING_DOWN) &&
          (get_state() != STATE_SHUTDOWN)) {
-    std::this_thread::sleep_for(200_ms);
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
   }
 }
 }  // namespace
@@ -76,17 +74,17 @@ bool run(const std::string& config_file) {
 
   for (auto m : cfg["modules"]) {
     LOG_I << "module_library: " << m["module_library"] << std::endl;
-    load_dynamic_lib(m["module_library"].get<std::string>());
+    load_dynamic_lib(m["module_library"].asString());
 
     for (auto c : m["nodes"]) {
       LOG_I << "class_name: " << c["class_name"] << std::endl;
-      auto n = std::unique_ptr<node_base>(create_node_obj(c["class_name"]));
+      auto n = std::unique_ptr<node_base>(create_node_obj(c["class_name"].asString()));
       if (n == nullptr) {
         LOG_E << "create_node_obj " << c["class_name"] << " failed!"
               << std::endl;
         return false;
       }
-      if (!n->init(c["config_file_path"])) {
+      if (!n->init(c["config_file_path"].asString())) {
         LOG_E << "init node " << c["class_name"] << " failed!" << std::endl;
         return false;
       }
@@ -97,13 +95,13 @@ bool run(const std::string& config_file) {
 
     for (auto c : m["timer_nodes"]) {
       LOG_I << "class_name: " << c["class_name"] << std::endl;
-      auto n = std::unique_ptr<node_base>(create_node_obj(c["class_name"]));
+      auto n = std::unique_ptr<node_base>(create_node_obj(c["class_name"].asString()));
       if (n == nullptr) {
         LOG_E << "create_node_obj " << c["class_name"] << " failed!"
               << std::endl;
         return false;
       }
-      if (!n->init(c["config_file_path"], c["interval"])) {
+      if (!n->init(c["config_file_path"].asString(), c["interval"].asInt())) {
         LOG_E << "init timer node " << c["class_name"] << " failed!"
               << std::endl;
         return false;
