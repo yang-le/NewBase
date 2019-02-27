@@ -36,6 +36,9 @@
     <ClCompile Include="message_bus.cc">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="external\jsoncpp\jsoncpp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class_factory.h">

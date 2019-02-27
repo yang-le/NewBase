@@ -15,4 +15,4 @@ subdirs: $(SUBDIRS)
 	done
 
 cpplint:
-	cpplint --recursive $(SUBDIRS)
+	cpplint --quiet --recursive $(SUBDIRS)
