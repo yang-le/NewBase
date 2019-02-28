@@ -52,5 +52,5 @@ void start_all();
 #define SYSTEM_NODE_REGIST(n, ...)                                           \
   using nb::system_node::##n;                                                \
   namespace {                                                                \
-  nb::system_nodes::registry::register_handler<n> handler_##n(##__VA_ARGS__); \
+  nb::system_nodes::registry::register_handler<n> handler_(##__VA_ARGS__);   \
   }

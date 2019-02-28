@@ -65,10 +65,10 @@ Base* create_class_obj(const std::string& class_name) {
 
 #define CLASS_FACTORY_REGIST(Derived, Base)                      \
   namespace {                                                    \
-  struct class_register_##Base##_##Derived {                     \
-    class_register_##Base##_##Derived() {                        \
+  struct class_register {                                        \
+    class_register() {                                           \
       nb::detail::regist_class<Derived, Base>(#Derived);         \
     }                                                            \
   };                                                             \
-  class_register_##Base##_##Derived register_##Base##_##Derived; \
+  class_register register_;                                      \
   }
