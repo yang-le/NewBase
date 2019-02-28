@@ -128,6 +128,7 @@
     <ClCompile Include="node.cc" />
     <ClCompile Include="platform.cc" />
     <ClCompile Include="system_nodes.cc" />
+    <ClCompile Include="thread_pool.cc" />
     <ClCompile Include="timer.cc" />
   </ItemGroup>
   <ItemGroup>

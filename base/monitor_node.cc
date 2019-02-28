@@ -13,10 +13,15 @@ class monitor_node : public timer_node {
 
   void process() override {
     auto topics = nb::message_bus::instance().get_topics();
-    nb::message_bus::instance().publish("channels", topics);
+    nb::message_bus::instance().publish("message_channels", topics);
+    LOG_I << "message_channels:";
     for (auto topic : topics) {
-      LOG_I << topic;
+      LOG_I << '\t' << topic;
     }
+
+    auto queue_size = nb::timer::instance().get_queue_size();
+    nb::message_bus::instance().publish("timer_queue_size", queue_size);
+    LOG_I << "timer_queue_size: "<< queue_size;
   }
 };
 }  // namespace system_node

@@ -1,6 +1,7 @@
 // Copyright [year] <Copyright Owner>
 
 #include "base/timer.h"
+#include "base/thread_pool.h"
 
 namespace nb {
 DEFINE_SINGLETON(timer);
@@ -12,12 +13,14 @@ timer::timer() : stopped_(false) {
 
       if (!tasks_.empty()) {
         task t = std::move(tasks_.top());
-        if (std::chrono::high_resolution_clock::now() >= t.dead_line_) {
+        if (std::chrono::high_resolution_clock::now() > t.dead_line_) {
           {
             std::lock_guard<std::mutex> lock(mutex_);
             tasks_.pop();
           }
-          t.func_();
+          thread_pool::instance().commit([t] {
+              t.func_();
+          });
         }
       }
     }

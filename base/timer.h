@@ -16,9 +16,6 @@
 #include "base/macros.h"
 
 namespace nb {
-
-using chrono_literals::operator"" _ms;
-
 class timer {
  public:
   template <typename F, typename... Args>
@@ -56,6 +53,10 @@ class timer {
     }
 
     return task->get_future();
+  }
+
+  size_t get_queue_size() {
+      return tasks_.size();
   }
 
  private:
