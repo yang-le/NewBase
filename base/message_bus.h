@@ -7,6 +7,7 @@
 #include <string>
 #include <tuple>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 
 #include "base/function_traits.h"
@@ -14,12 +15,12 @@
 #include "base/macros.h"
 
 namespace nb {
-
 class message_bus {
  public:
   template <typename F>
   void subscribe(const std::string& topic, const F& f) {
     std::lock_guard<std::mutex> lock(mutex_);
+    topics_.emplace(topic);
     map_.emplace(topic,
                  std::bind(&invoker<F>::apply, f, std::placeholders::_1));
   }
@@ -32,6 +33,8 @@ class message_bus {
       it->second(&tp);
     }
   }
+
+  const std::unordered_set<std::string>& get_topics() { return topics_; }
 
  private:
   template <typename F>
@@ -53,8 +56,8 @@ class message_bus {
 
   std::mutex mutex_;
   std::unordered_multimap<std::string, std::function<void(const void*)>> map_;
+  std::unordered_set<std::string> topics_;
 
   DECLARE_SINGLETON(message_bus);
 };
-
 }  // namespace nb

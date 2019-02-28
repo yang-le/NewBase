@@ -39,6 +39,12 @@
     <ClCompile Include="external\jsoncpp\jsoncpp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="monitor_node.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="system_nodes.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class_factory.h">
@@ -84,6 +90,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="chrono_literals.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="system_nodes.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

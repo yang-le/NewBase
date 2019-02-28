@@ -1,15 +1,16 @@
 // Copyright [year] <Copyright Owner>
 
+#include "base/platform.h"
 #include <csignal>
 #include <cstdlib>
 #include <memory>
 #include <utility>
 #include <vector>
-#include "base/platform.h"
 #include "base/config.h"
 #include "base/dynamic_lib.h"
 #include "base/log.h"
 #include "base/node.h"
+#include "base/system_nodes.h"
 
 namespace nb {
 namespace platform {
@@ -70,6 +71,8 @@ bool run(const std::string& config_file) {
     return false;
   }
 
+  system_nodes::start_all();
+
   auto cfg = load_config_from_file(config_file);
 
   for (auto m : cfg["modules"]) {
@@ -78,7 +81,8 @@ bool run(const std::string& config_file) {
 
     for (auto c : m["nodes"]) {
       LOG_I << "class_name: " << c["class_name"] << std::endl;
-      auto n = std::unique_ptr<node_base>(create_node_obj(c["class_name"].asString()));
+      auto n = std::unique_ptr<node_base>(
+          create_node_obj(c["class_name"].asString()));
       if (n == nullptr) {
         LOG_E << "create_node_obj " << c["class_name"] << " failed!"
               << std::endl;
@@ -95,7 +99,8 @@ bool run(const std::string& config_file) {
 
     for (auto c : m["timer_nodes"]) {
       LOG_I << "class_name: " << c["class_name"] << std::endl;
-      auto n = std::unique_ptr<node_base>(create_node_obj(c["class_name"].asString()));
+      auto n = std::unique_ptr<node_base>(
+          create_node_obj(c["class_name"].asString()));
       if (n == nullptr) {
         LOG_E << "create_node_obj " << c["class_name"] << " failed!"
               << std::endl;

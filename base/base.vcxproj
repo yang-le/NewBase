@@ -124,8 +124,10 @@
     <ClCompile Include="dynamic_lib.cc" />
     <ClCompile Include="external\jsoncpp\jsoncpp.cpp" />
     <ClCompile Include="message_bus.cc" />
+    <ClCompile Include="monitor_node.cc" />
     <ClCompile Include="node.cc" />
     <ClCompile Include="platform.cc" />
+    <ClCompile Include="system_nodes.cc" />
     <ClCompile Include="timer.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +144,7 @@
     <ClInclude Include="platform.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="smart_ptr.h" />
+    <ClInclude Include="system_nodes.h" />
     <ClInclude Include="thread_pool.h" />
     <ClInclude Include="timer.h" />
   </ItemGroup>
