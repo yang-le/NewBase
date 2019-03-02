@@ -5,10 +5,12 @@
 #include <functional>
 #include <memory>
 #include <mutex>
-#include <vector>
 #include <string>
+#include <utility>
+#include <vector>
 #include "base/macros.h"
 #include "base/node.h"
+#include "base/smart_ptr.h"
 
 namespace nb {
 namespace system_nodes {
@@ -19,7 +21,7 @@ class registry {
     template <typename... Args>
     explicit register_handler(Args &&... args) {
       registry::instance().funcs_.emplace_back([=] {
-        std::unique_ptr<node_base> node = std::make_unique<T>();
+        std::unique_ptr<node_base> node = utility::make_unique<T>();
         if (!node->init(args...)) {
           throw std::runtime_error(std::string("cannot init system node: ") +
                                    typeid(T).name());
@@ -49,8 +51,7 @@ void start_all();
 }  // namespace system_nodes
 }  // namespace nb
 
-#define SYSTEM_NODE_REGIST(n, ...)                                           \
-  using nb::system_node::##n;                                                \
-  namespace {                                                                \
-  nb::system_nodes::registry::register_handler<n> handler_(##__VA_ARGS__);   \
+#define SYSTEM_NODE_REGIST(n, ...)                     \
+  namespace {                                          \
+  registry::register_handler<n> handler_(__VA_ARGS__); \
   }
