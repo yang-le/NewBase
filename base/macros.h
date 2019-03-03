@@ -31,6 +31,7 @@
 
 // But it seems not to work well across Dlls.
 // To keep things simple, I came up with the following defines.
+// see https://isocpp.org/wiki/faq/ctors#construct-on-first-use-v2.
 
 #define DEFINE_SINGLETON(classname)               \
   classname &classname::instance() {              \
