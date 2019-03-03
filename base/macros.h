@@ -32,10 +32,10 @@
 // But it seems not to work well across Dlls.
 // To keep things simple, I came up with the following defines.
 
-#define DEFINE_SINGLETON(classname)  \
-  classname &classname::instance() { \
-    static classname instance;       \
-    return instance;                 \
+#define DEFINE_SINGLETON(classname)               \
+  classname &classname::instance() {              \
+    static classname *instance = new classname(); \
+    return *instance;                             \
   }
 
 #define DECLARE_SINGLETON(classname)            \
