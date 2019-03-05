@@ -11,9 +11,9 @@ private:
 
         valid_ = false;
 
-        nb::message_bus::instance().subscribe(topic_, [this](const cv::Mat *image) {
+        nb::message_bus::instance().subscribe(topic_, [this](cv::Mat image) {
             std::lock_guard<std::mutex> lock(mutex_);
-            image_ = image;
+            image_ = std::move(image);
             valid_ = true;
         });
 
@@ -25,14 +25,14 @@ private:
         if (valid_) {
             {
                 std::lock_guard<std::mutex> lock(mutex_);
-                cv::imshow("opencv_render", *image_);
+                cv::imshow("opencv_render", image_);
                 valid_ = false;
             }
             cv::waitKey(1);
         }
     }
 
-    const cv::Mat* image_;
+    cv::Mat image_;
     bool valid_;
     std::mutex mutex_;
 };

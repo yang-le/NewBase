@@ -30,11 +30,9 @@ class timer {
       std::lock_guard<std::mutex> lock(mutex_);
       tasks_.emplace(
           [=] {
-            f();
             start(interval, f);
-          },
-          std::chrono::high_resolution_clock::now() +
-              std::chrono::milliseconds(interval));
+            f();
+      }, interval);
     }
   }
 
@@ -47,9 +45,7 @@ class timer {
 
     if (!stopped_) {
       std::lock_guard<std::mutex> lock(mutex_);
-      tasks_.emplace([task] { (*task)(); },
-                     std::chrono::high_resolution_clock::now() +
-                         std::chrono::milliseconds(interval));
+      tasks_.emplace([task] { (*task)(); }, interval);
     }
 
     return task->get_future();
@@ -65,8 +61,9 @@ class timer {
         std::chrono::time_point<std::chrono::high_resolution_clock>;
 
     template <typename F>
-    task(F func, time_point&& dead_line)
-        : func_(func), dead_line_(std::move(dead_line)) {}
+    task(F func, unsigned int interval)
+        : func_(func), dead_line_(std::chrono::high_resolution_clock::now() +
+            std::chrono::milliseconds(interval)) {}
 
     bool operator<(const task& rhd) const {
       return dead_line_ > rhd.dead_line_;

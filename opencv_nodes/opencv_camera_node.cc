@@ -9,19 +9,17 @@ private:
             return false;
         }
         
-        if (!cap_.open(source_, cv::CAP_FFMPEG)) {
+        if (!cap_.open(source_)) {
             return false;
         }
-
-        cap_ >> image_;
 
         return true;
     }
 
 private:
     void process() override {
-        nb::message_bus::instance().publish(topic_, &image_);
         cap_ >> image_;
+        nb::message_bus::instance().publish(topic_, image_);
     }
 
     cv::VideoCapture cap_;
