@@ -7,7 +7,7 @@
 #include "base/config.h"
 
 namespace nb {
-    class render_node : public timer_node {
+    class render_node : public thread_node {
     protected:
         bool initialize(const std::string& cfg) override {
             auto render_conf = load_config_from_file(cfg);

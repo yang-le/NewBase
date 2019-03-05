@@ -6,6 +6,7 @@
 #include "base/class_factory.h"
 #include "base/macros.h"
 #include "base/timer.h"
+#include "base/log.h"
 
 namespace nb {
 class node_base {
@@ -39,13 +40,46 @@ class timer_node : public node_base {
       return false;
     }
 
-    timer::instance().start(interval, [this] { process(); });
+    timer::instance().start(interval, [this] {
+        try {
+            process();
+        } catch (std::exception e) {
+            LOG_I << e.what();
+        } catch (...) {
+            LOG_I << "unknow exception";
+        }
+    });
 
     return true;
   }
 
  private:
   virtual void process() = 0;
+};
+
+class thread_node : public node_base {
+public:
+    bool init(const std::string& cfg_file_path,
+        unsigned int /* interval */) override {
+        if (!initialize(cfg_file_path)) {
+            return false;
+        }
+
+        std::thread([this] {
+            try {
+                process();
+            } catch (std::exception e) {
+                LOG_I << e.what();
+            } catch (...) {
+                LOG_I << "unknow exception";
+            }
+        }).detach();
+
+        return true;
+    }
+
+private:
+    virtual void process() = 0;
 };
 
 NEW_BASE_EXPORT node_base* create_node_obj(const std::string& class_name);

@@ -88,27 +88,8 @@ bool run(const std::string& config_file) {
               << std::endl;
         return false;
       }
-      if (!n->init(c["config_file_path"].asString())) {
-        LOG_E << "init node " << c["class_name"] << " failed!" << std::endl;
-        return false;
-      }
-      LOG_I << "name: " << c["name"] << std::endl;
-      LOG_I << "config_file_path: " << c["config_file_path"] << std::endl;
-      nodes_.emplace_back(std::move(n));
-    }
-
-    for (auto c : m["timer_nodes"]) {
-      LOG_I << "class_name: " << c["class_name"] << std::endl;
-      auto n = std::unique_ptr<node_base>(
-          create_node_obj(c["class_name"].asString()));
-      if (n == nullptr) {
-        LOG_E << "create_node_obj " << c["class_name"] << " failed!"
-              << std::endl;
-        return false;
-      }
       if (!n->init(c["config_file_path"].asString(), c["interval"].asInt())) {
-        LOG_E << "init timer node " << c["class_name"] << " failed!"
-              << std::endl;
+        LOG_E << "init node " << c["class_name"] << " failed!" << std::endl;
         return false;
       }
       LOG_I << "name: " << c["name"] << std::endl;

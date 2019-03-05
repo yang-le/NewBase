@@ -2,7 +2,7 @@
     "modules": [
 		{
             "module_library": "E:/git/NewBase/Debug/opencv_nodes.dll",
-			"timer_nodes": [
+			"nodes": [
                 {
                     "class_name": "opencv_camera_node", 
                     "name": "opencv_camera_node", 
@@ -12,8 +12,7 @@
 				{
                     "class_name": "opencv_render_node", 
                     "name": "opencv_render_node", 
-                    "config_file_path": "E:/git/NewBase/main/render.json",
-					"interval" : 33
+                    "config_file_path": "E:/git/NewBase/main/render.json"
                 }
             ]
         }

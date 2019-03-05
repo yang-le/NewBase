@@ -22,8 +22,8 @@ private:
 
 private:
     void process() override {
-        if (valid_) {
-            {
+        for (;;) {
+            if (valid_) {
                 std::lock_guard<std::mutex> lock(mutex_);
                 cv::imshow("opencv_render", image_);
                 valid_ = false;
