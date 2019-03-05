@@ -1,23 +1,19 @@
 {
     "modules": [
-        {
-            "module_library": "E:/git/NewBase/Debug/Node1.dll",
+		{
+            "module_library": "E:/git/NewBase/Debug/opencv_nodes.dll",
 			"timer_nodes": [
                 {
-                    "class_name": "node1", 
-                    "name": "talker", 
-                    "config_file_path": "/path/to/talker.conf",
-					"interval" : 1000
-                }
-            ]
-        },
-		{
-            "module_library": "E:/git/NewBase/Debug/Node2.dll",
-			"nodes": [
-                {
-                    "class_name": "node2",
-                    "name": "listener",
-                    "config_file_path": "/path/to/listener.conf"
+                    "class_name": "opencv_camera_node", 
+                    "name": "opencv_camera_node", 
+                    "config_file_path": "E:/git/NewBase/main/camera.json",
+					"interval" : 33
+                },
+				{
+                    "class_name": "opencv_render_node", 
+                    "name": "opencv_render_node", 
+                    "config_file_path": "E:/git/NewBase/main/render.json",
+					"interval" : 33
                 }
             ]
         }

@@ -98,5 +98,11 @@
     <ClInclude Include="system_nodes.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="camera_node.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="render_node.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
