@@ -12,6 +12,7 @@
 
 #include "base/function_traits.h"
 #include "base/integer_sequence.h"
+#include "base/thread_pool.h"
 #include "base/macros.h"
 
 namespace nb {
@@ -30,7 +31,9 @@ class message_bus {
     auto range = map_.equal_range(topic);
     for (auto it = range.first; it != range.second; ++it) {
       auto tp = std::make_tuple(std::forward<Args>(args)...);
-      it->second(&tp);
+      thread_pool::instance().commit([it, tp] {
+          it->second(&tp);
+      });
     }
   }
 

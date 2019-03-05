@@ -2,7 +2,7 @@
 
 #include "base/log.h"
 #include "base/message_bus.h"
-#include "base/node.h"
+#include "base/thread_pool.h"
 #include "base/system_nodes.h"
 
 namespace nb {
@@ -12,16 +12,20 @@ class monitor_node : public timer_node {
   bool initialize(const std::string& /* cfg */) override { return true; }
 
   void process() override {
-    auto topics = nb::message_bus::instance().get_topics();
-    nb::message_bus::instance().publish("message_channels", topics);
+    auto topics = message_bus::instance().get_topics();
+    message_bus::instance().publish("message_channels", topics);
     LOG_I << "message_channels:";
     for (auto topic : topics) {
       LOG_I << '\t' << topic;
     }
 
-    auto queue_size = nb::timer::instance().get_queue_size();
-    nb::message_bus::instance().publish("timer_queue_size", queue_size);
-    LOG_I << "timer_queue_size: " << queue_size;
+    auto timer_queue_size = timer::instance().get_queue_size();
+    message_bus::instance().publish("timer_queue_size", timer_queue_size);
+    LOG_I << "timer_queue_size: " << timer_queue_size;
+
+    auto task_queue_size = thread_pool::instance().get_queue_size();
+    message_bus::instance().publish("timer_queue_size", task_queue_size);
+    LOG_I << "task_queue_size: " << task_queue_size;
   }
 };
 

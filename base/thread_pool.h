@@ -38,6 +38,8 @@ class thread_pool {
     return task->get_future();
   }
 
+  size_t get_queue_size() { return tasks_.size(); }
+
  private:
   std::queue<task_t> tasks_;
   std::vector<std::thread> threads_;
